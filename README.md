@@ -1,6 +1,6 @@
-# weblog-vue3
+# 💨 weblog-vue3
 
-### 使用的技术
+###  💨使用的技术
 - Vue3
 - Vite 4
 - Tailwind css

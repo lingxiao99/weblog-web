@@ -2,11 +2,12 @@
   <Header></Header>
 
   <!-- 文章标题、标签、Meta 信息 -->
-  <div style="width: 1228px;   " :style="{
+  <div style=" width: 1228px;   " :style="{
     'background-image': 'url(' + article.cover + ')',
     'background-size': 'cover',
-    'background-position': 'center'
-  }" class="mx-auto  mt-2  -mb-2 bg-white  border border-gray-200 rounded-lg dark:bg-gray-900 dark:border-gray-700">
+    'background-position': 'center',  
+  }" class="mx-auto  mt-2  -mb-2 bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-900 dark:border-gray-700  ">
+
     <div class="max-w-screen-xl flex flex-col flex-wrap mx-auto px-4 md:px-6 pb-14 pt-10 ">
       <!-- 标签集合 -->
       <div class="mb-5">
@@ -21,14 +22,14 @@
       </div>
 
       <!-- 文章标题 -->
-      <h1 class="font-bold text-2xl md:text-5xl mb-8 text-center text-indigo-300 ">
+      <h1 class="font-bold text-2xl md:text-5xl mb-8 text-center text-indigo-100  dark:text-indigo-100">
         <div>
           {{ article.title }}
         </div>
       </h1>
 
       <!-- Meta 信息 -->
-      <div class="flex gap-3 md:gap-6 text-gray-400 items-center  text-sm dark:text-indigo-300 flex justify-center">
+      <div class="flex gap-3 md:gap-6 text-gray-400 items-center  text-sm   dark:text-indigo-300 flex justify-center">
         <!-- 字数 -->
         <div class="flex items-center" data-tooltip-target="word-tooltip-bottom" data-tooltip-placement="bottom">
           <svg t="1701512226243" class="w-4 h-4 mr-1 icon " viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="28617" width="48" height="48">
