@@ -1,6 +1,7 @@
 <template>
 
   <div>
+    <ClickWords />
 
     <Header></Header>
 

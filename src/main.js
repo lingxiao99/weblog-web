@@ -19,6 +19,9 @@ import pinia from '@/stores'
 import 'viewerjs/dist/viewer.css'
 import VueViewer from 'v-viewer'
 
+//鼠标点击效果
+import ClickWords from '@/components/ClickWords.vue'
+
 
 const app = createApp(App)
 
@@ -31,6 +34,8 @@ app.use(router)
 app.use(pinia)
 
 app.use(VueViewer)
+
+app.component('ClickWords', ClickWords)
 
 // 引入图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

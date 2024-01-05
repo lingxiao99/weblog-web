@@ -11,11 +11,10 @@
       <!-- 博主昵称 -->
       <h5 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">{{ blogSettingsStore.blogSettings.author }}</h5>
       <!-- 介绍语 -->
-      <span class=" mb-6 text-sm text-gray-500 dark:text-gray-400" data-tooltip-target="introduction-tooltip-bottom"
-        data-tooltip-placement="bottom">{{ blogSettingsStore.blogSettings.introduction }}</span>
+      <span class=" mb-6 text-sm text-gray-500 dark:text-gray-400" data-tooltip-target="introduction-tooltip-bottom" data-tooltip-placement="bottom">{{ everyDaySay }}</span>
       <div id="introduction-tooltip-bottom" role="tooltip"
         class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        介绍语
+        每日一言
         <div class="tooltip-arrow" data-popper-arrow></div>
       </div>
 
@@ -119,6 +118,18 @@ import { useBlogSettingsStore } from '@/stores/blogsettings'
 import { onMounted, ref } from 'vue'
 import { getStatisticsInfo } from '@/api/frontend/statistics'
 import CountTo from '@/components/CountTo .vue'
+import { getEveryDay } from '@/api/frontend/index'
+
+const everyDaySay = ref(null)
+
+onMounted(() => {
+  getEveryDay()
+})
+
+getEveryDay().then((res) => {
+  console.log(res)
+  everyDaySay.value = res.hitokoto
+})
 
 // 引入博客设置信息 store
 const blogSettingsStore = useBlogSettingsStore()
