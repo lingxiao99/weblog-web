@@ -25,14 +25,21 @@
           </h2>
           <!-- 标签列表 -->
           <div class="flex flex-wrap gap-3">
-            <a v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 text-xs font-medium text-center border rounded-[12px]
-            hover:bg-green-100 focus:ring-4 focus:outline-none focus:ring-green-300 
+            <a v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 text-xs font-bold text-center border rounded-[12px]
+            hover:bg-green-100 focus:ring-4 focus:outline-none  
             dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 
-            dark:border-gray-700 dark:hover:text-white">
-              {{ tag.name }}
-              <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-sky-800 bg-sky-200 rounded-full">
-                {{ tag.articlesTotal }}
+            dark:border-gray-700 dark:hover:text-white hover:scale-110 cursor-pointer" :style="{ backgroundColor: getRandomColors() }">
+              <span :class="{
+        'w-full text-xs': index % 6 === 0,
+        'w-full text-sm': index % 6 === 1 || index % 6 === 2,
+        'w-full text-base': index % 6 === 3 || index % 6 === 4,
+        'w-full text-lg': index % 6 === 5
+      }">
+                #{{ tag.name }}
               </span>
+              <!-- <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-sky-800 bg-sky-200 rounded-full">
+                {{ tag.articlesTotal }}
+              </span> -->
             </a>
           </div>
         </div>
@@ -80,6 +87,22 @@ getTagList().then((res) => {
 const goTagArticleListPage = (id, name) => {
   // 跳转时通过 query 携带参数（标签 ID、标签名称）
   router.push({ path: '/tag/article/list', query: { id, name } })
+}
+
+const getRandomColor = () => {
+  let color = '#'
+  for (let i = 0; i < 3; i++) {
+    // 生成三个随机数来表示 RGB 颜色值
+    const randomValue = Math.floor(Math.random() * 128) + 128 // 限定在较高亮度范围内
+    color += randomValue.toString(16).padStart(2, '0')
+  }
+  return color
+}
+
+const getRandomColors = () => {
+  const colors = ['red', 'blue', 'green', 'yellow', 'pink', 'purple'] // 可以根据需要添加更多颜色
+  const randomIndex = Math.floor(Math.random() * colors.length)
+  return colors[randomIndex]
 }
 </script>
 

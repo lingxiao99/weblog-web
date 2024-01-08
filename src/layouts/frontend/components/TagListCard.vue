@@ -31,9 +31,9 @@
     </div>
     <!-- 标签列表 -->
     <div class="text-sm flex flex-wrap gap-2 font-medium text-gray-600 rounded-lg dark:border-gray-600 dark:text-white">
-      <span v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)"
+      <span v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)" :style="{ backgroundColor: getRandomColor() }"
         class="inline-block cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-green-200 hover:text-green-900 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-950">
-        {{ tag.name }}
+        # {{ tag.name }}
       </span>
     </div>
   </div>
@@ -59,5 +59,21 @@ getTagList().then((res) => {
 const goTagArticleListPage = (id, name) => {
   // 跳转时通过 query 携带参数（标签 ID、标签名称）
   router.push({ path: '/tag/article/list', query: { id, name } })
+}
+
+const getRandomColor = () => {
+  let color = '#'
+  for (let i = 0; i < 3; i++) {
+    // 生成三个随机数来表示 RGB 颜色值
+    const randomValue = Math.floor(Math.random() * 128) + 128 // 限定在较高亮度范围内
+    color += randomValue.toString(16).padStart(2, '0')
+  }
+  return color
+}
+
+const getRandomColors = () => {
+  const colors = ['red', 'blue', 'green', 'yellow', 'pink', 'purple'] // 可以根据需要添加更多颜色
+  const randomIndex = Math.floor(Math.random() * colors.length)
+  return colors[randomIndex]
 }
 </script>
