@@ -66,11 +66,11 @@ getCategoryList({ size: size.value }).then((res) => {
 
 // 所有分类
 const categories = ref([])
-getCategoryList().then((res) => {
-  if (res.success) {
-    categories.value = res.data
-  }
-})
+// getCategoryList().then((res) => {
+//   if (res.success) {
+//     categories.value = res.data
+//   }
+// })
 
 //跳转分类文章列表页
 const goCategoryArticleListPage = (id, name) => {
