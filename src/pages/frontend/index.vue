@@ -157,6 +157,8 @@
 
           <!-- 标签 -->
           <TagListCard></TagListCard>
+          <!-- 最新文章 -->
+          <!-- <NewArticleCard></NewArticleCard> -->
 
         </aside>
       </div>
@@ -178,6 +180,7 @@ import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import Notice from '@/layouts/frontend/components/Notice.vue'
+import NewArticleCard from '@/layouts/frontend/components/NewArticleCard.vue'
 import { initTooltips } from 'flowbite'
 import { onMounted, ref } from 'vue'
 import { getArticlePageList } from '@/api/frontend/article'

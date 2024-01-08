@@ -54,8 +54,12 @@
         <!-- 博主信息 -->
         <UserInfoCard></UserInfoCard>
 
+        <!-- 最新文章 -->
+        <NewArticleCard></NewArticleCard>
+
         <!-- 标签 -->
         <TagListCard></TagListCard>
+
       </aside>
     </div>
 
@@ -70,7 +74,7 @@ import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
-
+import NewArticleCard from '@/layouts/frontend/components/NewArticleCard.vue'
 import { getCategoryList } from '@/api/frontend/category'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'

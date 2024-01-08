@@ -45,6 +45,9 @@
 
         <!-- 分类 -->
         <CategoryListCard></CategoryListCard>
+
+        <!-- 最新文章 -->
+        <NewArticleCard></NewArticleCard>
       </aside>
     </div>
   </main>
@@ -60,6 +63,7 @@ import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue
 import { getTagList } from '@/api/frontend/tag'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import NewArticleCard from '@/layouts/frontend/components/NewArticleCard.vue'
 
 const router = useRouter([])
 
