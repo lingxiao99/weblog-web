@@ -236,7 +236,10 @@
         <UserInfoCard></UserInfoCard>
 
         <!-- 分类 -->
-        <CategoryListCard></CategoryListCard>
+        <!-- <CategoryListCard></CategoryListCard> -->
+
+        <!-- 最新文章 -->
+        <NewArticleCard></NewArticleCard>
 
         <!-- 标签 -->
         <TagListCard></TagListCard>
@@ -254,6 +257,7 @@ import Footer from '@/layouts/frontend/components/Footer.vue'
 import UserInfoCard from '@/layouts/frontend/components/UserInfoCard.vue'
 import TagListCard from '@/layouts/frontend/components/TagListCard.vue'
 import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue'
+import NewArticleCard from '@/layouts/frontend/components/NewArticleCard.vue'
 import {
   getCategoryArticlePageList,
   getCategoryList,

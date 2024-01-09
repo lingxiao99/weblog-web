@@ -36,9 +36,10 @@
 
           <!-- 分类列表 -->
           <div class="text-sm flex flex-wrap gap-3 font-medium text-gray-600 rounded-lg dark:border-gray-600 dark:text-white">
-            <a @click="goCategoryArticleListPage(category.id, category.name)" v-for="(category, index) in categories" :key="index" class="cursor-pointer inline-flex items-center px-4 py-2 text-sm font-medium text-center border rounded-lg 
+            <a @click="goCategoryArticleListPage(category.id, category.name)" v-for="(category, index) in categories" :key="index" class=" hover:scale-110 cursor-pointer inline-flex items-center px-4 py-2 text-sm font-medium text-center border rounded-lg 
             hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 
-            dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 dark:hover:text-white">
+            dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700 d
+            ark:hover:text-white">
               {{ category.name }}
               <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-sky-800 bg-sky-200 rounded-full">
                 {{ category.articlesTotal }}

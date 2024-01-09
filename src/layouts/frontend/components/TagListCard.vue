@@ -22,7 +22,7 @@
       <a @click="router.push('/tag/list')" class=" bg-gray-100 flex items-center px-2.5 py-1 text-xs font-medium text-center 
             text-gray-900  rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 
             dark:bg-gray-800 dark:text-white dark:border dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:border-gray-700
-             dark:focus:ring-gray-700">
+             dark:focus:ring-gray-700  ">
         <svg class="w-[7px] h-[7px] text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
         </svg>
@@ -30,9 +30,9 @@
 
     </div>
     <!-- 标签列表 -->
-    <div class="text-sm flex flex-wrap gap-2 font-medium text-gray-600 rounded-lg dark:border-gray-600 dark:text-white">
+    <div class="text-sm flex flex-wrap gap-2 font-medium text-gray-600 rounded-lg dark:border-gray-600 dark:text-white ">
       <span v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)" :style="{ backgroundColor: getRandomColor() }"
-        class="inline-block cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-green-200 hover:text-green-900 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-950">
+        class="hover:scale-110 cursor-pointer  bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded hover:bg-green-200 hover:text-green-900 dark:bg-green-900  dark:hover:bg-green-950 ">
         # {{ tag.name }}
       </span>
     </div>

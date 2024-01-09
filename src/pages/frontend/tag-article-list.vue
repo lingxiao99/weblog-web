@@ -36,7 +36,7 @@
             <a v-for="(tag, index) in tags" :key="index" @click="goTagArticleListPage(tag.id, tag.name)" class="cursor-pointer inline-flex items-center px-3.5 py-1.5 text-xs font-bold text-center border rounded-[12px]
             hover:bg-green-100 focus:ring-4 focus:outline-none  
             dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 
-            dark:border-gray-700 dark:hover:text-white hover:scale-110 cursor-pointer" :style="{ backgroundColor: getRandomColor() }">
+            dark:border-gray-700 dark:hover:text-white hover:scale-110 cursor-pointer" :style="{ color: getRandomColor() }">
               <span :class="{
                   'w-full text-xs': index % 6 === 0,
                   'w-full text-sm': index % 6 === 1 || index % 6 === 2,
@@ -248,7 +248,11 @@
         <CategoryListCard></CategoryListCard>
 
         <!-- 标签 -->
-        <TagListCard></TagListCard>
+        <!-- <TagListCard></TagListCard> -->
+
+        <!-- 最新文章 -->
+        <NewArticleCard></NewArticleCard>
+
       </aside>
     </div>
 
@@ -266,6 +270,7 @@ import CategoryListCard from '@/layouts/frontend/components/CategoryListCard.vue
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getTagArticlePageList, getTagList } from '@/api/frontend/tag'
+import NewArticleCard from '@/layouts/frontend/components/NewArticleCard.vue'
 
 const route = useRoute()
 const router = useRouter()
