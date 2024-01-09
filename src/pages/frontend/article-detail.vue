@@ -328,30 +328,6 @@ const handleMouseLeave = (event) => {
     copyBtn.classList.add('hidden')
   }
 }
-
-// const articleContentRef = ref(null)
-// onMounted(() => {
-//   // 使用 MutationObserver 监视 DOM 的变化
-//   const observer = new MutationObserver((mutationsList) => {
-//     for (let mutation of mutationsList) {
-//       if (mutation.type === 'childList') {
-//         // 获取所有 pre code 节点
-//         let highlight = document.querySelectorAll('pre code')
-//         // 循环高亮
-//         highlight.forEach((block) => {
-//           if (!block.getAttribute('data-highlighted')) {
-//             hljs.highlightElement(block)
-//           }
-//         })
-//       }
-//     }
-//   })
-
-//   // 配置监视子节点的变化
-//   const config = { childList: true, subtree: true }
-//   // 开始观察内容变化
-//   observer.observe(articleContentRef.value, config)
-// })
 </script>
 
 <style scoped>

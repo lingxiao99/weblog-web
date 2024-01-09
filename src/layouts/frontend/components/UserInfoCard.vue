@@ -130,7 +130,7 @@ onMounted(() => {
 })
 
 getEveryDay().then((res) => {
-  console.log(res)
+  // console.log(res)
   everyDaySay.value = res.hitokoto
 })
 
