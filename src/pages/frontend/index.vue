@@ -14,7 +14,7 @@
           <!-- 文章列表，grid 表格布局，分为 2 列 -->
           <div class="grid grid-cols-1 gap-4  ">
             <div v-for="(article, index) in articles" :key="index" class="col-span-2 md:col-span-1 hover:scale-[1.03] animate__animated animate__slideInLeft ">
-              <div class="bg-white h-full border border-gray-200 rounded-lg  shadow-md dark:bg-gray-800 dark:border-gray-700">
+              <div class=" relative hover:scale-[1.03] bg-white h-full border border-gray-200 rounded-lg  shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <!-- 文章封面 -->
                 <a @click="goArticleDetailPage(article.id)" class="cursor-pointer flex">
                   <!-- <img class="rounded-t-lg h-48 w-full" :src="article.cover"> -->
@@ -23,7 +23,7 @@
                       <div class="image-background rounded-lg h-64 m-2" :style="`background-image: url(${article.cover}); background-size: cover; background-position: right;`"></div>
                     </div>
                     <div class="w-1/3 m-1 " style="display: flex;  ">
-                      <div class="p-5 ml-2 ">
+                      <div class="p-10 ml-2 ">
                         <!-- 标签 -->
                         <div class="mb-6">
                           <span v-for="(tag, tagIndex) in article.tags" :key="tagIndex" @click="goTagArticleListPage(tag.id,tag.name)" class="cursor-pointer bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 
@@ -57,12 +57,18 @@
                           </svg>
                           <a @click="goCategoryArticleListPage(article.category.id, article.category.name)" class="text-gray-400 hover:underline">{{ article.category.name }}</a>
                         </p>
+
+                        <!-- 是否置顶 -->
+                        <div v-if="article.isTop"
+                          class="absolute inline-flex items-center justify-center w-14 h-7 text-1xs font-bold text-white bg-red-500 border-4 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
+                          精选
+                        </div>
                       </div>
                     </div>
                   </template>
                   <template v-else>
-                    <div class="w-1/3  m-1">
-                      <div class="p-5">
+                    <div class="w-1/3  ">
+                      <div class="p-11">
                         <!-- 标签 -->
                         <div class="mb-6 ">
                           <span v-for="(tag, tagIndex) in article.tags" :key="tagIndex" @click="goTagArticleListPage(tag.id,tag.name)"
@@ -94,6 +100,11 @@
                           </svg>
                           <a @click="goCategoryArticleListPage(article.category.id, article.category.name)" class="text-gray-400 hover:underline">{{ article.category.name }}</a>
                         </p>
+                        <!-- 是否置顶 -->
+                        <div v-if="article.isTop"
+                          class="absolute inline-flex items-center justify-center w-14 h-7 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
+                          置顶
+                        </div>
                       </div>
                     </div>
 
