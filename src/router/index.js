@@ -12,6 +12,7 @@ import CategoryList from '@/pages/frontend/category-list.vue'
 import CategoryArticleList from '@/pages/frontend/category-article-list.vue'
 import TagList from '@/pages/frontend/tag-list.vue'
 import ArticleDetail from '@/pages/frontend/article-detail.vue'
+import AboutMe from '@/pages/frontend/about-me.vue'
 
 import TagArticleList from '@/pages/frontend/tag-article-list.vue'
 import NotFound from '@/pages/frontend/404.vue'
@@ -36,6 +37,13 @@ const routes = [
     component: ArchiveList,
     meta: {
       title: 'Weblog 归档页'
+    }
+  },
+  {
+    path: '/about/me', // 关于我
+    component: AboutMe,
+    meta: {
+      title: 'Weblog 关于我'
     }
   },
   {
