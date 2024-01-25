@@ -10,7 +10,7 @@
     </svg>
   </div>
   <div v-show="showScrollToTopBtn" @click="scrollToTop"
-    class="border  cursor-pointer fixed bottom-2 right-2 md:bottom-10 md:right-10 inline p-3 bg-white hover:bg-gray-100 rounded dark:bg-gray-800 dark:hover:bg-gray-900 dark:border-gray-700">
+    class="   border  cursor-pointer fixed bottom-2 right-2 md:bottom-10 md:right-10 inline p-3 bg-white hover:bg-gray-100 rounded dark:bg-gray-800 dark:hover:bg-gray-900 dark:border-gray-700">
     <svg t="1699408003976" class="icon w-6 h-6" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10992" width="200" height="200">
       <path d="M512 512m-488.1 0a488.1 488.1 0 1 0 976.2 0 488.1 488.1 0 1 0-976.2 0Z" fill="#4552FF" p-id="10993"></path>
       <path

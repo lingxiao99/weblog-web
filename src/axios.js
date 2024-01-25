@@ -33,6 +33,7 @@ instance.interceptors.response.use(function (response) {
 
   return response.data;
 }, function (error) {
+  console.log(error.response)
   let status = error.response.status;
   // 状态码 401
   if (status == 401) {
