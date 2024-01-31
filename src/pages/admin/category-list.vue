@@ -33,9 +33,9 @@
       <!-- 分页列表 -->
       <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
 
-        <el-table-column prop="name" label="分类名称" width="180" align="center" />
-        <el-table-column prop="articlesTotal" label="文章数" width="100" align="center" />
-        <el-table-column prop="createTime" label="创建时间" width="180" align="center" />
+        <el-table-column prop="name" label="分类名称" width="250" align="center" />
+        <el-table-column prop="articlesTotal" label="文章数" width="120" align="center" />
+        <el-table-column prop="createTime" label="创建时间" width="300" align="center" />
         <el-table-column label="操作" align="center">
           <template #default="scope">
             <el-button type="danger" size="small" @click="deleteCategorySubmit(scope.row)">
