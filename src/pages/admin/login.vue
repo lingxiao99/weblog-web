@@ -44,12 +44,12 @@
 
           <el-form-item>
             <!-- 登录按钮，宽度设置为 100% -->
-            <el-button class="w-full" size="large" :loading="loading" @click="onSubmit" type="primary">登录</el-button>
+            <el-button class="w-full " size="large" :loading="loading" type="primary" @click="onSubmit">登录</el-button>
 
           </el-form-item>
           <el-form-item class="register-item">
             <!-- 注册按钮 -->
-            <el-button class="w-full  " size="large" type="default" @click="onchange">注册</el-button>
+            <el-button class="w-full btn btn-accent btn-outline " size="large" @click="onchange">注册</el-button>
           </el-form-item>
 
         </el-form>

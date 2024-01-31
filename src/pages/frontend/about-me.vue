@@ -1,7 +1,7 @@
 <template>
-  <Header></Header>
 
-  <div class="">
+  <Header></Header>
+  <main class="admin-container container">
     <div class="e-card playing ">
       <div class="image"></div>
 
@@ -23,54 +23,64 @@
       </div>
 
     </div>
-  </div>
 
-  <div style=" width: 1228px;   " class="mx-auto  mt-3  -mb-2 bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-800 dark:border-gray-700  ">
+    <div style=" width: 1228px;   " class="mx-auto  bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-800 dark:border-gray-700  ">
+      123456
+    </div>
 
-  </div>
+    <div style=" width: 1228px;   " class="mx-auto  bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-800 dark:border-gray-700  ">
+      123456
+    </div>
 
-  <div style=" width: 1228px;   " class="mx-auto   mt-5  -mb-2 bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-800 dark:border-gray-700  ">
-    12356
-  </div>
+    <div style=" width: 1228px;   " class="mx-auto  bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-800 dark:border-gray-700  ">
+      123456
+    </div>
+  </main>
+
+  <Footer></Footer>
 
 </template>
 
-<script setup>
+<script setup >
 import Header from '@/layouts/frontend/components/Header.vue'
-import { useBlogSettingsStore } from '@/stores/blogsettings'
-import { onMounted, ref } from 'vue'
-import { getStatisticsInfo } from '@/api/frontend/statistics'
-import CountTo from '@/components/CountTo .vue'
-//  import { getEveryDay } from '@/api/frontend/index'
+import Footer from '@/layouts/frontend/components/Footer.vue'
+import { defineProps } from 'vue'
 
-// const everyDaySay = ref(null)
-
-// onMounted(() => {
-//   getEveryDay()
-// })
-
-// getEveryDay().then((res) => {
-//   // console.log(res)
-//   everyDaySay.value = res.hitokoto
-// })
-
-// 引入博客设置信息 store
-const blogSettingsStore = useBlogSettingsStore()
-
-const statisticsInfo = ref({})
-
-getStatisticsInfo().then((res) => {
-  if (res.success) {
-    statisticsInfo.value = res.data
-  }
+const props = defineProps({
+  // 声明和接收组件的属性
 })
+
+const words = ['我', '要', '吃', '饭', '!', '!']
+
+function reversedWord(word) {
+  return word.split('').reverse().join('')
+}
 </script>
+<style scoped>
+/**保持AdminFooter 在页面最底部 */
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.custom-background {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden; /* 确保伪元素不会超出容器边界 */
+}
+</style>
 
 <style>
+/* ////////////////// */
 .e-card {
   margin: 100px auto;
-  background: transparent;
-  box-shadow: -4px 11px 28px 0px rgba(0, 0, 0, 0.45);
+
   position: relative;
   width: 1278px;
   height: 300px;
@@ -148,4 +158,7 @@ getStatisticsInfo().then((res) => {
     transform: rotate(360deg);
   }
 }
+
+/* ////////////////////////////////
+ */
 </style>

@@ -5,8 +5,9 @@
 
     <Header></Header>
     <div style=" width: 1249px; " class="mx-auto  mt-3  -mb-2 bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-800 dark:border-gray-700  ">
-      <div class="flex items-center ">
-        <svg t="1705651083165" class="icon w-6 h-6 m-3" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4934" width="200" height="200">
+      <div class="flex items-center  ">
+        <svg t="1705651083165" class="icon w-6 h-6 m-2  text-green-500 dark:text-green-400 " viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4934" width="200"
+          height="200">
           <path
             d="M833.163636 491.054545c0-109.381818-74.472727-204.8-179.2-235.054545-18.618182-4.654545-32.581818 6.981818-37.236363 23.272727 0 2.327273-2.327273 6.981818 0 6.981818 0 13.963636 6.981818 27.927273 20.945454 32.581819 95.418182 27.927273 153.6 125.672727 125.672728 223.418181-18.618182 62.836364-65.163636 107.054545-125.672728 125.672728-13.963636 4.654545-23.272727 18.618182-20.945454 32.581818 0 18.618182 13.963636 32.581818 30.254545 32.581818h6.981818c107.054545-34.909091 181.527273-130.327273 179.2-242.036364z"
             fill="#282a36" p-id="4935"></path>
@@ -28,7 +29,7 @@
           <!-- 文章列表，grid 表格布局，分为 2 列 -->
           <div class="grid grid-cols-1 gap-4  ">
             <div v-for="(article, index) in articles" :key="index" class="col-span-2 md:col-span-1 hover:scale-[1.03] animate__animated animate__slideInLeft ">
-              <div class="  relative hover:scale-[1.03] bg-white h-full border border-gray-200 rounded-lg  shadow-md dark:bg-gray-800 dark:border-gray-700">
+              <div class="   relative hover:scale-[1.03] bg-white h-full border border-gray-200 rounded-lg  shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <!-- 文章封面 -->
                 <a @click="goArticleDetailPage(article.id)" class="cursor-pointer flex">
                   <!-- <img class="rounded-t-lg h-48 w-full" :src="article.cover"> -->
@@ -299,4 +300,6 @@ const goTagArticleListPage = (id, name) => {
   display: none;
 }
 </style>
+
+
 

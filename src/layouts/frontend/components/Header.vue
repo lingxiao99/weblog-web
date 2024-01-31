@@ -7,11 +7,14 @@
           <!-- <img src="../../../assets/logo.png" class="h-8 mr-3  " alt="Flowbite Logo" /> -->
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ blogSettingsStore.blogSettings.name }}</span>
         </a>
+
+        <div class="flex items-center md:order-2 mr-2">
+
+        </div>
         <div class="flex items-center md:order-2 mr-2">
           <!-- 白天黑夜切换 -->
           <button @click="toggleDark()" class="ml-1 mr-4 vt-switch vt-switch-appearance" type="button" role="switch" aria-label="切换深色模式" aria-checked="false" data-v-d401ce6f=""><span
-              class="vt-switch-check">
-              <span class="vt-switch-icon"><!--[-->
+              class="vt-switch-check"><span class="vt-switch-icon"><!--[-->
                 <!-- 太阳图标 -->
                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="vt-switch-appearance-sun" :class="[isDark ? 'hidden' : 'block']">
                   <path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z">
@@ -36,13 +39,11 @@
                   <path
                     d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z">
                   </path>
-                </svg><!--]--></span>
-            </span>
-          </button>
+                </svg><!--]--></span></span></button>
           <!-- 搜索框 -->
           <button type="button" @click="clickSearchBtn"
             class="mr-2 hidden outline-none lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
-            <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <svg class="w-4 h-4 mr-2 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
             <span class="mr-3">搜索文章 ...</span>
@@ -50,7 +51,7 @@
           </button>
 
           <!-- 登录 -->
-          <div class="text-gray-900 ml-1 mr-1 hover:text-blue-700 dark:text-white" v-if="!isLogined" @click="$router.push('/login')">
+          <div class="   text-gray-900 ml-1 mr-1 hover:text-blue-700 dark:text-white" v-if="!isLogined" @click="$router.push('/login')">
             登录
           </div>
           <!-- 已经登录，展示用户头像 -->
@@ -93,7 +94,7 @@
             </svg>
           </button>
         </div>
-        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 ml-32" id="navbar-search">
           <!-- 移动端搜索框 -->
           <button type="button" @click="clickSearchBtn" class="relative mt-3 flex w-full md:hidden items-center text-sm leading-6 text-slate-400 rounded-md
                          ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 
