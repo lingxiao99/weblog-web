@@ -7,6 +7,7 @@ import AdminArticleList from '@/pages/admin/article-list.vue'
 import AdminCategoryList from '@/pages/admin/category-list.vue'
 import AdminTagList from '@/pages/admin/tag-list.vue'
 import AdminBlogSetting from '@/pages/admin/blog-setting.vue'
+import AdminWikiList from '@/pages/admin/wiki-list.vue'
 import ArchiveList from '@/pages/frontend/archive-list.vue'
 import CategoryList from '@/pages/frontend/category-list.vue'
 import CategoryArticleList from '@/pages/frontend/category-article-list.vue'
@@ -71,14 +72,14 @@ const routes = [
     path: '/article/:articleId', // 文章详情页
     component: ArticleDetail,
     meta: { // meta 信息
-        title: 'Weblog 详情页'
+      title: 'Weblog 详情页'
     }
   },
   {
     path: '/tag/article/list', // 标签列表页
     component: TagArticleList,
     meta: { // meta 信息
-        title: 'Weblog 标签文章页'
+      title: 'Weblog 标签文章页'
     }
   },
   {
@@ -86,9 +87,9 @@ const routes = [
     name: 'NotFound',
     component: NotFound,
     meta: {
-        title: '404 页'
+      title: '404 页'
     }
-},
+  },
 
 
   {
@@ -125,6 +126,13 @@ const routes = [
         }
       },
       {
+        path: "/admin/wiki/list",
+        component: AdminWikiList,
+        meta: {
+          title: '知识库管理'
+        }
+      },
+      {
         path: "/admin/blog/setting",
         component: AdminBlogSetting,
         meta: {
@@ -144,10 +152,10 @@ const router = createRouter({
   history: createWebHashHistory(),
   // routes: routes 的缩写
   routes,
-   // 每次切换路由后，页面滚动到顶部
-   scrollBehavior() {
+  // 每次切换路由后，页面滚动到顶部
+  scrollBehavior () {
     return { top: 0 }
-}
+  }
 })
 
 // ES6 模块导出语句，它用于将 router 对象导出，以便其他文件可以导入和使用这个对象
