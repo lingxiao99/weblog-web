@@ -6,9 +6,9 @@
     'background-image': 'url(' + article.cover + ')',
     'background-size': 'cover',
     'background-position': 'center',  
-  }" class="mx-auto  mt-2  -mb-2 bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-900 dark:border-gray-700  ">
+  }" class="mx-auto  mt-2  -mb-2 bg-white   border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-900 dark:border-gray-700  rounded-lg ">
 
-    <div class="max-w-screen-xl flex flex-col flex-wrap mx-auto px-4 md:px-6 pb-14 pt-10 backdrop-blur-sm  ">
+    <div class="max-w-screen-xl flex flex-col flex-wrap mx-auto px-4 md:px-6 pb-14 pt-10   ">
       <!-- 标签集合 -->
       <div class="mb-5">
         <!-- 标签集合 -->
@@ -119,7 +119,7 @@
   </div>
 
   <!-- 主内容区域 -->
-  <main class="container max-w-screen-xl mx-auto px-4 md:px-6 py-4 admin-container">
+  <main class="container max-w-screen-xl mx-auto px-4 md:px-6 py-4 admin-container ">
     <!-- grid 表格布局，分为 4 列 -->
     <div class="grid grid-cols-4 gap-7">
       <!-- 左边栏，占用 3 列 -->

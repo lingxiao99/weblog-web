@@ -26,4 +26,12 @@ const locale = zhCn
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
+
+/*body {
+  color: #000;
+  background: url(./assets/2.png) fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 101%;
+}*/
 </style>

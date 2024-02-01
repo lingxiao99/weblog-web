@@ -56,7 +56,7 @@
             </el-tooltip>
 
             <el-tooltip class="box-item" effect="dark" content="编辑目录" placement="bottom">
-              <el-button size="small" :icon="Tickets" circle>
+              <el-button size="small" :icon="Tickets" @click="showEditWikiCatalogDialog(scope.row)" circle>
               </el-button>
             </el-tooltip>
 
@@ -123,6 +123,10 @@
         </el-form-item>
       </el-form>
     </FormDialog>
+
+    <!-- 目录编辑 -->
+    <WikiCatalogEditDialog ref="editCatalogFormDialogRef" title="编辑目录" width="70%" destroyOnClose>
+    </WikiCatalogEditDialog>
   </div>
 </template>
 
@@ -150,6 +154,7 @@ import {
 import FormDialog from '@/components/FormDialog.vue'
 import { uploadFile } from '@/api/admin/file'
 import { showMessage, showModel } from '@/composales/utils'
+import WikiCatalogEditDialog from '@/components/WikiCatalogEditDialog.vue'
 
 // 模糊搜索的知识库标题
 const searchWikiTitle = ref('')
@@ -176,6 +181,8 @@ const formDialogRef = ref(null)
 
 // 更新知识库对话框引用
 const editFormDialogRef = ref(null)
+// 编辑目录对话框是否显示
+const editCatalogFormDialogRef = ref(null)
 
 // 表单引用
 const formRef = ref(null)
@@ -478,6 +485,11 @@ const onEditWikiSubmit = () => {
       })
       .finally(() => editFormDialogRef.value.closeBtnLoading()) // 隐藏提交按钮 loading
   })
+}
+// 编辑目录按钮点击事件
+const showEditWikiCatalogDialog = (row) => {
+  // 显示编辑目录对话框, 并传入知识库 ID
+  editCatalogFormDialogRef.value.open(row.id)
 }
 </script>
 <style scoped>
