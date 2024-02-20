@@ -12,13 +12,18 @@
     <!-- 内容 -->
     <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
       <h2 id="accordion-flush-heading-1" v-for="(catalog, index) in catalogs" :key="index">
-        <!-- 一级目录 -->
+        <!--  -->
         <button type="button" class="hover:bg-gray-100 py-3 px-3 rounded-lg flex items-center w-full font-medium rtl:text-right 
                     text-gray-500 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
           <svg data-accordion-icon class="w-3 h-3 mr-2 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
           </svg>
-          <span class="flex items-center grow" v-html="catalog.title"></span>
+          <!-- 一级目录标题 -->
+          <span v-if="!catalog.editing" class="flex items-center grow" v-html="catalog.title"></span>
+          <!-- 标题输入框 -->
+          <span v-else class="w-full">
+            <el-input v-model="catalog.title" @blur="onEditTitleInputBlur(catalog.id)" placeholder="请输入目录标题" clearable />
+          </span>
           <!-- 右侧竖着的三个点：操作图标 -->
           <div class="hover:bg-gray-200 rounded py-2 px-2">
             <el-dropdown @command="handleCommand">
@@ -31,7 +36,7 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item>
+                  <el-dropdown-item :command="{ id: catalog.id, sort: catalog.sort, action: 'rename' }">
                     <el-icon>
                       <EditPen />
                     </el-icon>
@@ -55,7 +60,7 @@
                     </el-icon>
                     下移
                   </el-dropdown-item>
-                  <el-dropdown-item divided>
+                  <el-dropdown-item :command="{ id: catalog.id, sort: catalog.sort, action: 'removeFromCatalog' }" divided>
                     <el-icon>
                       <DocumentRemove />
                     </el-icon>
@@ -65,16 +70,22 @@
               </template>
             </el-dropdown>
           </div>
+
         </button>
 
         <!-- 二级目录 -->
         <ul v-if="catalog.children && catalog.children.length > 0">
           <li v-for="(childCatalog, index2) in catalog.children" :key="index2" class="flex items-center ps-10 py-2 pe-3 rounded-lg hover:bg-gray-100">
             <!-- 二级标题 -->
-            <span v-html="childCatalog.title"></span>
+            <span class="w-full">
+              <span v-if="!childCatalog.editing" v-html="childCatalog.title" class="flex items-center"></span>
+              <span v-else>
+                <el-input v-model="childCatalog.title" autofocus="true" @blur="onEditTitleInputBlur(childCatalog.id)" placeholder="请输入目录标题" clearable />
+              </span>
+            </span>
             <span class="grow"></span>
             <!-- 重命名 -->
-            <span class="hover:bg-gray-200 rounded py-2 px-2 ml-2 mr-2">
+            <span class="hover:bg-gray-200 rounded py-2 px-2 ml-2 mr-2" @click="editTitle(childCatalog.id)">
               <svg t="1705474417719" class="icon w-4 h-4" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8306" width="200" height="200">
                 <path
                   d="M402.24 753.12l417.984-417.952a35.552 35.552 0 0 0 0-50.304l-75.424-75.424a35.552 35.552 0 0 0-50.304 0L276.576 627.392l-8.992 134.72 134.688-8.992zM193.664 801.92l13.76-205.92L644.192 159.168a106.656 106.656 0 0 1 150.848 0l75.424 75.424a106.656 106.656 0 0 1 0 150.848L433.632 822.304l-205.92 13.728A32 32 0 0 1 193.6 801.92zM644.224 259.744l-50.272 50.24 125.696 125.76 50.272-50.304-125.696-125.696z"
@@ -83,7 +94,7 @@
             </span>
             <!-- 移出目录 -->
             <el-tooltip class="box-item" effect="dark" content="移出目录" placement="right">
-              <span class="hover:bg-gray-200 rounded py-2 px-2">
+              <span class="hover:bg-gray-200 rounded py-2 px-2" @click="removeArticleFromCatalog(childCatalog.id)">
                 <svg t="1705473517473" class="icon w-3.5 h-3.5" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7174" width="200" height="200">
                   <path
                     d="M607.897867 768.043004c-17.717453 0-31.994625-14.277171-31.994625-31.994625L575.903242 383.935495c0-17.717453 14.277171-31.994625 31.994625-31.994625s31.994625 14.277171 31.994625 31.994625l0 351.94087C639.892491 753.593818 625.61532 768.043004 607.897867 768.043004z"
@@ -109,6 +120,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { showModel } from '@/composales/utils'
 
 // 对话框是否显示
 const dialogVisible = ref(false)
@@ -154,7 +166,7 @@ defineExpose({
 })
 
 // 目录数据
-const catalogs = [
+const catalogs = ref([
   {
     id: 1894,
     articleId: null,
@@ -174,5 +186,108 @@ const catalogs = [
       },
     ],
   },
-]
+  {
+    id: 1896,
+    articleId: null,
+    title: '高级进阶',
+    sort: 2,
+    level: 1,
+    editing: false,
+    children: [],
+  },
+])
+
+// 一级目录: 操作按钮下拉菜单
+const handleCommand = (command) => {
+  if (command.action == 'rename') {
+    // 重命名
+    editTitle(command.id)
+  } else if (command.action == 'removeFromCatalog') {
+    removeCatalog(command.id)
+  }
+}
+
+// 重命名标题
+const editTitle = (catalogId) => {
+  // 根据目录 ID 查找对应的目录
+  let targetCatalog = findCatalogById(catalogs.value, catalogId)
+  // 将编辑状态置为 true
+  targetCatalog.editing = true
+}
+
+// 删除目录
+const removeCatalog = (catalogId) => {
+  showModel('是否确定移出该目录？')
+    .then(() => {
+      deleteCatalog(catalogs.value, catalogId)
+      console.log(catalogs.values)
+    })
+    .catch((err) => {
+      console.log('取消了')
+    })
+}
+
+// 移出二级目录
+const removeArticleFromCatalog = (catalogId) => {
+  showModel('是否确定移出该目录？')
+    .then(() => {
+      deleteCatalog(catalogs.value, catalogId)
+      console.log(catalogs.values)
+    })
+    .catch((err) => {
+      console.log('取消了')
+    })
+}
+
+// 删除 catalogs 数组中对应的目录对象
+function deleteCatalog(catalogs, targetId) {
+  for (let i = 0; i < catalogs.length; i++) {
+    const catalog = catalogs[i]
+
+    // 一级目录删除
+    if (catalog.id === targetId) {
+      catalogs.splice(i, 1)
+      return catalogs
+    }
+
+    // 二级目录删除
+    if (catalog.children) {
+      // 递归
+      catalog.children = deleteCatalog(catalog.children, targetId)
+    }
+  }
+  return catalogs
+}
+
+// 查找对应的目录
+function findCatalogById(catalogs, targetId) {
+  for (const catalog of catalogs) {
+    if (catalog.id === targetId) {
+      return catalog // 找到目标目录，返回它
+    }
+
+    if (catalog.children && catalog.children.length > 0) {
+      // 递归
+      const foundInChildren = findCatalogById(catalog.children, targetId)
+      if (foundInChildren) {
+        return foundInChildren // 在子目录中找到目标目录，返回它
+      }
+    }
+  }
+
+  return null // 没有找到目标目录
+}
+
+// 标题输入框 blur 事件
+const onEditTitleInputBlur = (catalogId) => {
+  // console.log(catalogId)
+  let targetCatalog = findCatalogById(catalogs.value, catalogId)
+
+  // 将目标目录的eediting 字段置为 false
+  targetCatalog.editing = false
+
+  // 若标题被替换成了空字符串，设置默认值
+  targetCatalog.title =
+    targetCatalog.title !== '' ? targetCatalog.title : '请输入标题'
+}
 </script>

@@ -44,17 +44,6 @@
 <script setup >
 import Header from '@/layouts/frontend/components/Header.vue'
 import Footer from '@/layouts/frontend/components/Footer.vue'
-import { defineProps } from 'vue'
-
-const props = defineProps({
-  // 声明和接收组件的属性
-})
-
-const words = ['我', '要', '吃', '饭', '!', '!']
-
-function reversedWord(word) {
-  return word.split('').reverse().join('')
-}
 </script>
 <style scoped>
 /**保持AdminFooter 在页面最底部 */
