@@ -48,13 +48,13 @@
                     </el-icon>
                     添加文章
                   </el-dropdown-item>
-                  <el-dropdown-item>
+                  <el-dropdown-item divided :command="{ id: catalog.id, sort: catalog.sort, action: 'moveUp' }" v-if="(index + 1) > 1">
                     <el-icon>
                       <Top />
                     </el-icon>
                     上移
                   </el-dropdown-item>
-                  <el-dropdown-item>
+                  <el-dropdown-item :command="{ id: catalog.id, sort: catalog.sort, action: 'moveDown' }" v-if="(index + 1) < catalogs.length">
                     <el-icon>
                       <Bottom />
                     </el-icon>
@@ -202,6 +202,12 @@ const handleCommand = (command) => {
   if (command.action == 'rename') {
     // 重命名
     editTitle(command.id)
+  } else if (command.action == 'moveUp') {
+    // 上移
+    catalogMove(command.id, command.sort, 'up')
+  } else if (command.action == 'moveDown') {
+    // 下移
+    catalogMove(command.id, command.sort, 'down')
   } else if (command.action == 'removeFromCatalog') {
     removeCatalog(command.id)
   }
@@ -289,5 +295,52 @@ const onEditTitleInputBlur = (catalogId) => {
   // 若标题被替换成了空字符串，设置默认值
   targetCatalog.title =
     targetCatalog.title !== '' ? targetCatalog.title : '请输入标题'
+}
+
+// 目录移动
+function catalogMove(catalogId, sort, action) {
+  //被移动的目录
+  let sourceCatalog = findCatalogById(catalogs.value, catalogId)
+
+  // 目标目录
+  let targetCatalog = getCatalogBySort(sort, action)
+
+  // 若没有找到替换的目标，就return
+  if (targetCatalog === null) return
+
+  //获取各自的排序号
+  let sourceSort = sourceCatalog.sort
+  let targetSort = targetCatalog.sort
+  // 互换排序号
+  sourceCatalog.sort = targetSort
+  targetCatalog.sort = sourceSort
+  // 重新排序
+  sortCatalogs()
+  console.log(catalogs.value)
+}
+
+function getCatalogBySort(sort, action) {
+  if (action == 'up') {
+    const tmpCatalogs = [...catalogs.value]
+
+    for (const catalog of tmpCatalogs.reverse()) {
+      if (catalog.sort < sort) {
+        return catalog
+      }
+    }
+  } else if (action == 'down') {
+    for (const catalog of catalogs.value) {
+      if (catalog.sort > sort) {
+        return catalog
+      }
+    }
+  }
+  return null
+}
+
+// 重新排序目录
+function sortCatalogs() {
+  // 使用 sort 方法对 sort 字段升序排序
+  catalogs.value = catalogs.value.sort((a, b) => a.sort - b.sort)
 }
 </script>

@@ -10,6 +10,7 @@
 - Lucene
 - minio
 - icon-font
+- VueDraggablePlus
 
 
 
