@@ -17,6 +17,7 @@ import AboutMe from '@/pages/frontend/about-me.vue'
 
 import TagArticleList from '@/pages/frontend/tag-article-list.vue'
 import NotFound from '@/pages/frontend/404.vue'
+import WikiList from '@/pages/frontend/wiki-list.vue'
 //统一在这里声明所有路由
 const routes = [
   {
@@ -45,6 +46,13 @@ const routes = [
     component: AboutMe,
     meta: {
       title: 'Weblog 关于我'
+    }
+  },
+  {
+    path: '/wiki/list', // 知识库
+    component: WikiList,
+    meta: {
+      title: '知识库'
     }
   },
   {
