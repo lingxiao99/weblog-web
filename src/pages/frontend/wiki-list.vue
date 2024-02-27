@@ -86,7 +86,7 @@ getWikiList().then((res) => {
 const router = useRouter()
 
 const goWikiArticleDetailPage = (wikiId, articleId) => {
-  console.log('跳过知识库=》' + wikiId + ',' + articleId)
+  // console.log('跳过知识库=》' + wikiId + ',' + articleId)
   router.push({ path: '/wiki/' + wikiId, query: { articleId } })
 }
 </script>
