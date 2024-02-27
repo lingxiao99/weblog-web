@@ -115,7 +115,8 @@
               </svg>
               最后编辑于 {{ article.updateTime }}
             </div>
-
+            <!-- 返回顶部 -->
+            <ScrollToTopButton></ScrollToTopButton>
             <!-- 上下篇 -->
             <nav class="flex flex-row mt-7" v-if="preNext">
               <!-- basis-1/2 用于占用 flex 布局的一半空间 -->
@@ -170,6 +171,8 @@ import hljs from 'highlight.js/lib/common'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
 import { getWikiArticlePreNext } from '@/api/frontend/wiki'
+
+import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -292,6 +295,11 @@ watch(route, (newRoute, oldRoute) => {
   background-color: #fff;
 }
 
+/* 暗黑主题的背景色 */
+.dark .main {
+  background-color: #111827;
+}
+
 /* h1, h2, h3, h4, h5, h6 标题样式 */
 ::v-deep(
     .article-content h1,
@@ -321,9 +329,9 @@ watch(route, (newRoute, oldRoute) => {
 
 ::v-deep(.dark .article-content h2) {
   --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
+  color: rgb(156 163 175 / var(--tw-text-opacity));
   border-bottom: 1px solid;
-  border-color: rgb(55 65 81 / 1);
+  border-color: rgb(31 41 55 / 1);
 }
 
 ::v-deep(.article-content h3) {
@@ -335,7 +343,7 @@ watch(route, (newRoute, oldRoute) => {
 
 ::v-deep(.dark .article-content h3) {
   --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 ::v-deep(.article-content h4) {
@@ -347,7 +355,7 @@ watch(route, (newRoute, oldRoute) => {
 
 ::v-deep(.dark .article-content h4) {
   --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 ::v-deep(.article-content h5) {
@@ -359,7 +367,7 @@ watch(route, (newRoute, oldRoute) => {
 
 ::v-deep(.dark .article-content h5) {
   --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 ::v-deep(.article-content h6) {
@@ -371,7 +379,7 @@ watch(route, (newRoute, oldRoute) => {
 
 ::v-deep(.dark .article-content h6) {
   --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 /* p 段落样式 */
@@ -405,7 +413,7 @@ watch(route, (newRoute, oldRoute) => {
 ::v-deep(.dark .article-content blockquote) {
   quotes: none;
   --tw-bg-opacity: 1;
-  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  background-color: #0d1117;
   border-left: 2.3px solid #555;
   color: #666;
   font-size: 16px;
@@ -425,7 +433,7 @@ watch(route, (newRoute, oldRoute) => {
 
 /* 超链接样式 */
 ::v-deep(.article-content a) {
-  color: #167bc2;
+  color: #2980b9;
 }
 
 ::v-deep(.article-content a:hover) {
