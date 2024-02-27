@@ -152,8 +152,9 @@
         </div>
       </div>>
       <!-- 右边栏 -->
-      <div class="bg-yellow-500 fixed z-20 top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-50rem))] w-[19.5rem] py-10 overflow-y-auto hidden xl:block">
-        右边栏
+      <div class=" fixed z-20 top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-50rem))] 
+                w-[19.5rem] py-10 overflow-y-auto hidden xl:block">
+        <WikiToc></WikiToc>
       </div>
     </main>
     <WikiFooter></WikiFooter>
@@ -173,6 +174,8 @@ import 'highlight.js/styles/tokyo-night-dark.css'
 import { getWikiArticlePreNext } from '@/api/frontend/wiki'
 
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
+
+import WikiToc from '@/layouts/frontend/components/WikiToc.vue'
 
 const route = useRoute()
 const router = useRouter()
