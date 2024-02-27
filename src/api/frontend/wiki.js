@@ -10,3 +10,10 @@ export function getWikiList () {
 export function getWikiArticlePreNext (data) {
     return axios.post("/wiki/article/preNext", data)
 }
+
+
+
+// 获取知识库目录
+export function getWikiCatalogs (id) {
+    return axios.post("/wiki/catalog/list", { id })
+}

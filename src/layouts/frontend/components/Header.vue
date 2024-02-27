@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-10">
     <nav class="bg-white border-gray-200 border-b dark:border-gray-800 dark:bg-gray-900">
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
         <!-- 博客 LOGO 、博客名称 -->
         <a href="/" class="flex items-center">
           <!-- <img src="../../../assets/logo.png" class="h-8 mr-3  " alt="Flowbite Logo" /> -->

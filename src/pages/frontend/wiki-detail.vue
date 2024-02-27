@@ -3,9 +3,33 @@
     <WikiHeader></WikiHeader>
     <main class="grow container max-w-screen-3xl mx-auto px-4 sm:px-6 md:px-8 py-4">
       <!-- 左边栏 -->
-      <div class="bg-red-500 hidden lg:block fixed z-20 inset-0 top-[5.5rem] 
+      <div class="lg:block fixed z-20 inset-0 top-[5.5rem] 
                 left-[max(0px,calc(50%-45rem))] right-auto w-[19rem] pb-10 pl-8 pr-6 overflow-y-auto">
-        左边栏
+
+        <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-[#0d1117] dark:text-gray-300" data-inactive-classes="">
+          <div v-for="(catalog, index) in catalogs" :key="index">
+            <h2 :id="'accordion-flush-heading-' + catalog.id">
+              <button type="button" class="hover:bg-gray-100 flex items-center justify-between w-full py-3 px-3 rounded-lg 
+                            font-medium rtl:text-right text-gray-500 dark:text-gray-400 gap-3 dark:hover:bg-gray-800" :data-accordion-target="'#accordion-flush-body-' + catalog.id"
+                :aria-expanded="[catalog.children.some(item => item.articleId == route.query.articleId) ? true : false]" :aria-controls="'accordion-flush-body-' + catalog.id">
+                <!-- 一级目录标题 -->
+                <span class="flex items-center" v-html="catalog.title"></span>
+                <!-- 箭头 -->
+                <svg data-accordion-icon class="w-3 h-3 rotate-90 transition-all shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+                </svg>
+              </button>
+            </h2>
+            <!-- 二级目录 -->
+            <ul :id="'accordion-flush-body-' + catalog.id" class="hidden" :aria-labelledby="'accordion-flush-heading-' + catalog.id">
+              <!-- 二级目录标题 -->
+              <li v-for="(childCatalog, index2) in catalog.children" :key="index2" class="flex items-center ps-10 py-2 pe-3 rounded-lg cursor-pointer dark:text-gray-400"
+                :class="[childCatalog.articleId == route.query.articleId ? 'bg-sky-50 text-sky-600 dark:bg-sky-950 dark:text-sky-500' : 'hover:bg-gray-100 dark:hover:bg-gray-800']"
+                @click="goWikiArticleDetailPage(childCatalog.articleId)" v-html="childCatalog.title">
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <!-- 中间栏 -->
       <div class="lg:pl-[22.5rem]">
@@ -152,7 +176,7 @@
         </div>
       </div>>
       <!-- 右边栏 -->
-      <div class=" fixed z-20 top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-50rem))] 
+      <div class=" fixed  top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-50rem))] 
                 w-[19.5rem] py-10 overflow-y-auto hidden xl:block">
         <WikiToc></WikiToc>
       </div>
@@ -164,18 +188,19 @@
 import WikiHeader from '@/layouts/frontend/components/WikiHeader.vue'
 import WikiFooter from '@/layouts/frontend/components/WikiFooter.vue'
 
-import { ref, nextTick, watch } from 'vue'
+import { ref, nextTick, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getArticleDetail } from '@/api/frontend/article'
 import { useDark } from '@vueuse/core'
 import hljs from 'highlight.js/lib/common'
 import 'highlight.js/styles/tokyo-night-dark.css'
 
-import { getWikiArticlePreNext } from '@/api/frontend/wiki'
+import { getWikiArticlePreNext, getWikiCatalogs } from '@/api/frontend/wiki'
 
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 
 import WikiToc from '@/layouts/frontend/components/WikiToc.vue'
+import { initAccordions } from 'flowbite'
 
 const route = useRoute()
 const router = useRouter()
@@ -187,6 +212,19 @@ const isDark = useDark()
 
 // 文章数据
 const article = ref({})
+
+onMounted(() => {})
+
+const catalogs = ref([])
+
+// 获取当前知识库的目录数据
+getWikiCatalogs(route.params.wikiId).then((res) => {
+  if (res.success) {
+    catalogs.value = res.data
+    // 获取数据成功后，初始化 Accordions 组件
+    nextTick(() => initAccordions())
+  }
+})
 
 // 获取文章详情
 function refreshArticleDetail(articleId) {
@@ -205,7 +243,7 @@ function refreshArticleDetail(articleId) {
     }
 
     article.value = res.data
-    console.log(article.value)
+    // console.log(article.value)
 
     nextTick(() => {
       // 获取所有 pre code 节点
@@ -681,5 +719,12 @@ watch(route, (newRoute, oldRoute) => {
   --copied-icon: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' height='20' width='20' stroke='rgba(128,128,128,1)' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--copied-icon);
   mask-image: var(--copied-icon);
+}
+
+.rotate-180 {
+  --tw-rotate: 180deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+    rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+    scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 </style>
