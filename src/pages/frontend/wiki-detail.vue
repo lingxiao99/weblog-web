@@ -1,20 +1,20 @@
 <template>
   <div class="main min-h-screen flex flex-col">
-    <WikiHeader></WikiHeader>
+    <WikiHeader :catalogs="catalogs"></WikiHeader>
     <main class="grow container max-w-screen-3xl mx-auto px-4 sm:px-6 md:px-8 py-4">
       <!-- 左边栏 -->
-      <div class="hidden lg:block fixed z-20 inset-0 top-[5.5rem] 
-                 right-auto w-[19rem] pb-10 pr-6 overflow-y-auto"
+      <div class="transition-all duration-300 hidden lg:block fixed inset-0 top-[5.5rem] 
+               right-auto w-[19rem] pb-10 pr-6 overflow-y-auto"
         :class="[isExpand ? 'left-[max(0px,calc(50%-45rem))] w-[20rem] pl-8' : 'left-0 w-0 pl-0 2xl:left-[max(0px,calc(50%-45rem))] 2xl:w-[19rem] 2xl:pl-8']">
 
         <div class="flex">
           <!-- 知识库目录 -->
-          <div class="grow" :class="[isExpand ? 'block' : 'hidden 2xl:block']">
-            <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-[#0d1117] dark:text-gray-300" data-inactive-classes="" class="last:pb-[170px]">
+          <div class="grow transition-all duration-300" :class="[isExpand ? 'block' : 'hidden 2xl:block']">
+            <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-[#111827] dark:text-gray-300" data-inactive-classes="" class="last:pb-[170px]">
               <div v-for="(catalog, index) in catalogs" :key="index">
                 <h2 :id="'accordion-flush-heading-' + catalog.id">
                   <button type="button" class="hover:bg-gray-100 flex items-center justify-between w-full py-3 px-3 rounded-lg 
-                            font-medium rtl:text-right text-gray-500 dark:text-gray-400 gap-3 dark:hover:bg-gray-800" :data-accordion-target="'#accordion-flush-body-' + catalog.id"
+                          font-medium rtl:text-right text-gray-600 dark:text-gray-400 gap-3 dark:hover:bg-gray-800" :data-accordion-target="'#accordion-flush-body-' + catalog.id"
                     :aria-expanded="[catalog.children.some(item => item.articleId == route.query.articleId) ? true : false]" :aria-controls="'accordion-flush-body-' + catalog.id">
                     <!-- 一级目录标题 -->
                     <span class="flex items-center" v-html="catalog.title"></span>
@@ -28,7 +28,7 @@
                 <ul :id="'accordion-flush-body-' + catalog.id" class="hidden" :aria-labelledby="'accordion-flush-heading-' + catalog.id">
                   <!-- 二级目录标题 -->
                   <li v-for="(childCatalog, index2) in catalog.children" :key="index2" class="flex items-center ps-10 py-2 pe-3 rounded-lg cursor-pointer 
-                                    dark:text-gray-400"
+                                  dark:text-gray-400"
                     :class="[childCatalog.articleId == route.query.articleId ? 'bg-sky-50 text-sky-600 dark:bg-sky-950 dark:text-sky-500' : 'hover:bg-gray-100 dark:hover:bg-gray-800']"
                     @click="goWikiArticleDetailPage(childCatalog.articleId)" v-html="childCatalog.title">
                   </li>
@@ -37,9 +37,9 @@
             </div>
           </div>
           <!-- 点击收缩、展开 -->
-          <div class="hidden md:inline-block 2xl:hidden transition-all" @click="shrinkAndExpand">
+          <div class="hidden md:inline-block 2xl:hidden transition-all duration-300" @click="shrinkAndExpand">
             <div id="left-toc-sidebar" class="left-toc-sidebar top-[5.5rem]">
-              <span id="left-toc-sidebar-arrow" class="arrow start flex items-center justify-center -rotate-90" :class="[isExpand ? '-rotate-90' : 'rotate-90']">
+              <span id="left-toc-sidebar-arrow" class="arrow start flex items-center justify-center " :class="[isExpand ? '-rotate-90' : 'rotate-90']">
               </span>
             </div>
           </div>
@@ -54,7 +54,7 @@
             <div class="mt-5">
               <h1 class="font-bold text-3xl md:text-4xl mb-5 dark:text-gray-400">{{ article.title }}</h1>
               <div class="flex gap-3 md:gap-6 text-gray-400 items-center text-sm pb-3 
-                                    border-b border-gray-100 dark:border-gray-800">
+                                  border-b border-gray-100 dark:border-gray-800">
                 <!-- 字数 -->
                 <div class="flex items-center" data-tooltip-target="word-tooltip-bottom" data-tooltip-placement="bottom">
                   <svg t="1701512226243" class="w-4 h-4 mr-1 icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="28617" width="48" height="48">
@@ -153,8 +153,7 @@
               </svg>
               最后编辑于 {{ article.updateTime }}
             </div>
-            <!-- 返回顶部 -->
-            <ScrollToTopButton></ScrollToTopButton>
+
             <!-- 上下篇 -->
             <nav class="flex flex-row mt-7" v-if="preNext">
               <!-- basis-1/2 用于占用 flex 布局的一半空间 -->
@@ -190,49 +189,41 @@
         </div>
       </div>
       <!-- 右边栏 -->
-      <div class=" fixed  top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-50rem))] 
-                w-[19.5rem] py-10 overflow-y-auto hidden xl:block">
+      <div class="fixed top-[3.8125rem] bottom-0 right-[max(0px,calc(50%-50rem))] 
+              w-[19.5rem] py-10 overflow-y-auto hidden xl:block">
         <WikiToc></WikiToc>
       </div>
     </main>
+
+    <!-- 返回顶部 -->
+    <ScrollToTopButton></ScrollToTopButton>
+
     <WikiFooter></WikiFooter>
   </div>
 </template>
+
 <script setup>
+import { ref, watch, onMounted, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import WikiHeader from '@/layouts/frontend/components/WikiHeader.vue'
 import WikiFooter from '@/layouts/frontend/components/WikiFooter.vue'
-
-import { ref, nextTick, watch, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import WikiToc from '@/layouts/frontend/components/WikiToc.vue'
 import { getArticleDetail } from '@/api/frontend/article'
 import { useDark } from '@vueuse/core'
+import { getWikiArticlePreNext, getWikiCatalogs } from '@/api/frontend/wiki'
 import hljs from 'highlight.js/lib/common'
 import 'highlight.js/styles/tokyo-night-dark.css'
-
-import { getWikiArticlePreNext, getWikiCatalogs } from '@/api/frontend/wiki'
-
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
-
-import WikiToc from '@/layouts/frontend/components/WikiToc.vue'
 import { initAccordions } from 'flowbite'
+
+onMounted(() => {
+  nextTick(() => initAccordions())
+})
 
 const route = useRoute()
 const router = useRouter()
-// 上下页
-const preNext = ref(null)
-
-// 是否为暗黑模式
-const isDark = useDark()
-
-// 文章数据
-const article = ref({})
-
-onMounted(() => {})
 
 const catalogs = ref([])
-
-// 目录是否展开，默认为 true
-const isExpand = ref(true)
 
 // 获取当前知识库的目录数据
 getWikiCatalogs(route.params.wikiId).then((res) => {
@@ -243,10 +234,13 @@ getWikiCatalogs(route.params.wikiId).then((res) => {
   }
 })
 
-// 点击收缩、展开
-const shrinkAndExpand = () => {
-  isExpand.value = !isExpand.value
-}
+// 是否为暗黑模式
+const isDark = useDark()
+
+// 文章数据
+const article = ref({})
+// 上下页
+const preNext = ref(null)
 
 // 获取文章详情
 function refreshArticleDetail(articleId) {
@@ -265,7 +259,6 @@ function refreshArticleDetail(articleId) {
     }
 
     article.value = res.data
-    // console.log(article.value)
 
     nextTick(() => {
       // 获取所有 pre code 节点
@@ -315,11 +308,6 @@ function refreshArticleDetail(articleId) {
 }
 refreshArticleDetail(route.query.articleId)
 
-// 跳转文章详情页
-const goWikiArticleDetailPage = (articleId) => {
-  router.push({ path: '/wiki/' + route.params.wikiId, query: { articleId } })
-}
-
 const handleMouseEnter = (event) => {
   // 鼠标移入，显示按钮
   let copyBtn = event.target.querySelector('button')
@@ -346,12 +334,25 @@ function copyToClipboard(text) {
   document.body.removeChild(textarea)
 }
 
+// 跳转文章详情页
+const goWikiArticleDetailPage = (articleId) => {
+  router.push({ path: '/wiki/' + route.params.wikiId, query: { articleId } })
+}
+
 // 监听路由
 watch(route, (newRoute, oldRoute) => {
   // 重新渲染文章详情
   refreshArticleDetail(newRoute.query.articleId)
 })
-</script>   
+
+// 目录是否展开，默认为 true
+const isExpand = ref(true)
+// 点击收缩、展开
+const shrinkAndExpand = () => {
+  isExpand.value = !isExpand.value
+}
+</script>
+
 <style scoped>
 /* 背景色设置为白色 */
 .main {
@@ -750,7 +751,7 @@ watch(route, (newRoute, oldRoute) => {
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-/* 收缩、展开相关样式 */
+/* 收缩、展开箭头样式 */
 .left-toc-sidebar {
   position: fixed;
   bottom: 0;

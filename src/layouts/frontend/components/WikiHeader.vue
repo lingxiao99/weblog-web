@@ -1,17 +1,36 @@
 <template>
-  <header class="sticky top-0 z-10">
-    <nav class="bg-white border-gray-200 border-b dark:border-gray-800 dark:bg-gray-900">
+  <header class="sticky top-0 z-30">
+    <nav class="bg-white border-gray-200 border-b dark:bg-[#111827] dark:border-gray-800">
       <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <!-- 博客 LOGO 、博客名称 -->
-        <a href="/" class="flex items-center">
-          <!-- <img src="../../../assets/logo.png" class="h-8 mr-3  " alt="Flowbite Logo" /> -->
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-gray-400">{{ blogSettingsStore.blogSettings.name }}</span>
-        </a>
 
-        <div class="flex items-center md:order-2 mr-2">
+        <div class="flex items-center">
+          <!-- 移动端知识库目录图标 -->
+          <div class="inline-block lg:hidden mr-3">
+            <input type="checkbox" id="checkbox" v-model="isDrawerExpand">
+            <label for="checkbox" class="toggle">
+              <div class="bars" id="bar1"></div>
+              <div class="bars" id="bar2"></div>
+              <div class="bars" id="bar3"></div>
+            </label>
+          </div>
 
+          <!-- 博客 LOGO 、博客名称 -->
+          <a href="/" class="flex items-center">
+            <img :src="blogSettingsStore.blogSettings.logo" class="h-8 mr-3 rounded-full" alt="Weblog Logo" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-gray-400">{{
+                          blogSettingsStore.blogSettings.name }}</span>
+          </a>
         </div>
-        <div class="flex items-center md:order-2 mr-2">
+
+        <div class="flex items-center md:order-2">
+          <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false"
+            class="md:hidden text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+            </svg>
+            <span class="sr-only">Search</span>
+          </button>
+
           <!-- 白天黑夜切换 -->
           <button @click="toggleDark()" class="ml-1 mr-4 vt-switch vt-switch-appearance" type="button" role="switch" aria-label="切换深色模式" aria-checked="false" data-v-d401ce6f=""><span
               class="vt-switch-check"><span class="vt-switch-icon"><!--[-->
@@ -40,26 +59,27 @@
                     d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z">
                   </path>
                 </svg><!--]--></span></span></button>
+
           <!-- 搜索框 -->
-          <button type="button" @click="clickSearchBtn"
-            class="mr-2 hidden outline-none lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
-            <svg class="w-4 h-4 mr-2 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <button type="button" @click="clickSearchBtn" class="mr-2 hidden outline-none md:flex items-center text-sm leading-6 text-slate-400 rounded-md 
+                      ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 
+                      dark:bg-slate-800 dark:hover:bg-slate-700 dark:hover:ring-slate-700">
+            <svg class="w-3.5 h-3.5 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
             <span class="mr-3">搜索文章 ...</span>
-            <span class="px-2 py-[1px] flex-none text-xs border text-gray-400 rounded dark:border-gray-600 ">Ctrl K</span>
+            <span class="px-2 py-[1px] flex-none text-xs border text-gray-400 rounded dark:border-gray-600">Ctrl
+              K</span>
           </button>
 
           <!-- 登录 -->
-          <div class="   text-gray-900 ml-1 mr-1 hover:text-blue-700 dark:text-white" v-if="!isLogined" @click="$router.push('/login')">
-            登录
-          </div>
+          <div class="text-gray-900 ml-1 mr-1 hover:text-blue-700 dark:text-white" v-if="!isLogined" @click="$router.push('/login')">登录</div>
           <!-- 已经登录，展示用户头像 -->
           <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" v-else
             class="text-white ml-2 mr-2 md:mr-0 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button">
             <!-- 用户登录头像 -->
-            <img class="w-12 h-12 rounded-full" :src="blogSettingsStore.blogSettings.avatar" alt="user photo" />
+            <img class="w-8 h-8 rounded-full" :src="blogSettingsStore.blogSettings.avatar" alt="user photo">
           </button>
 
           <!-- Dropdown menu -->
@@ -86,7 +106,7 @@
           </div>
 
           <button data-collapse-toggle="navbar-search" type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            class="inline-flex outline-none items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-search" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
@@ -94,11 +114,12 @@
             </svg>
           </button>
         </div>
-        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 ml-32" id="navbar-search">
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+
           <!-- 移动端搜索框 -->
           <button type="button" @click="clickSearchBtn" class="relative mt-3 flex w-full md:hidden items-center text-sm leading-6 text-slate-400 rounded-md
-                           ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 
-                           dark:highlight-white/5 dark:hover:bg-slate-700 dark:hover:ring-slate-700">
+                       ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 
+                       dark:highlight-white/5 dark:hover:bg-slate-700 dark:hover:ring-slate-700">
             <svg class="w-3.5 h-3.5 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
@@ -106,33 +127,29 @@
             <span class="px-2 py-[1px] flex-none text-xs border text-gray-400 rounded dark:border-gray-600">Ctrl
               K</span>
           </button>
-          <ul
-            class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+
+          <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 
+                      md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 
+                      dark:border-gray-700">
             <li>
               <a @click="router.push('/')" :class="[currPath == '/' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
-                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-blue-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                class="block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:bg-transparent md:p-0 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
                 aria-current="page">首页</a>
             </li>
             <li>
               <a @click="router.push('/category/list')"
-                :class="[currPath.startsWith('/category/list') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
-                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-blue-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">分类</a>
-
+                :class="[currPath.startsWith('/category') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
+                class="block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">分类</a>
             </li>
             <li>
               <a @click="router.push('/tag/list')"
                 :class="[currPath.startsWith('/tag') ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
-                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-blue-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">标签</a>
+                class="block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">标签</a>
             </li>
             <li>
               <a @click="router.push('/archive/list')"
                 :class="[currPath == '/archive/list' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
-                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-blue-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">归档</a>
-            </li>
-            <li>
-              <a @click="router.push('/about/me')"
-                :class="[currPath == '/about/me' ? 'text-sky-600 md:border-b-2 md:border-sky-600 dark:text-sky-500 dark:md:border-sky-600' : 'text-gray-900 dark:text-gray-400']"
-                class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-blue-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">关于我</a>
+                class="block py-2 pl-3 pr-4 rounded md:rounded-none hover:bg-gray-100 md:hover:bg-transparent md:hover:text-sky-600 md:p-0 md:dark:hover:text-sky-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">归档</a>
             </li>
             <li>
               <a @click="router.push('/wiki/list')"
@@ -161,8 +178,7 @@
           <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
           </svg>
-          <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-            是否确定退出登录?
+          <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">是否确定退出登录?
           </h3>
           <button @click="logout" data-modal-hide="popup-modal" type="button"
             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
@@ -170,8 +186,7 @@
           </button>
           <button data-modal-hide="popup-modal" type="button"
             class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-            取消
-          </button>
+            取消</button>
         </div>
       </div>
     </div>
@@ -179,7 +194,7 @@
 
   <!-- 站内搜索 -->
   <div id="search-modal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center  w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -202,17 +217,17 @@
                   </svg>
                   <span class="sr-only">Loading...</span>
                 </div>
+
                 <svg v-else class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                 </svg>
-
               </div>
-
-              <input type="search" ref="searchInputRef" id="search" v-model="searchWord"
+              <input type="search" id="search" ref="searchInputRef" v-model="searchWord"
                 class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-sky-500 focus:border-sky-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
-                placeholder="请输入搜索关键字..." required>
+                placeholder="请输入关键词搜索..." required>
             </div>
           </form>
+
           <!-- 关闭 Modal -->
           <button type="button" @click="searchModal.hide()"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -224,20 +239,19 @@
         </div>
         <!-- Modal body -->
         <div class="p-4 md:p-5 space-y-4">
-
           <div v-if="searchArticles && searchArticles.length > 0">
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              共搜索到{{total}} 篇相关文章
+              共搜索到 {{ total }} 篇相关文章
             </p>
-            <ol class="mt-3 divide-y divider-gray-200 dark:divide-gray-600 ">
-              <li v-for="(article,index) in searchArticles" :key="index">
-                <a @click="jumpToArticleDetailPage(article.id)" class="items-center block p-3 sm:flex hover:bg-gray-100 hover:rounded-lg dark:hover:bg-gray-600">
-                  <img class="w-24 h-12 mb-3 mr-3 rounded-lg sm:mb-0" :src="article.cover">
-                  <div class="text-gray-600 dark:text-gray-400 ">
-                    <h2 class="text-base font-normal text-gray-900 dark:text-white" v-html="article.title">
-                    </h2>
-                    <span class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400"><svg class="inline w-2.5 h-2.5 mr-2 text-gray-400 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <ol class="mt-3 divide-y divider-gray-200 dark:divide-gray-600">
+              <li v-for="(article, index) in searchArticles" :key="index">
+                <a @click="jumpToArticleDetailPage(article.id)" class="items-center cursor-pointer block p-3 sm:flex hover:bg-gray-100 hover:rounded-lg 
+                                  dark:hover:bg-gray-600">
+                  <img class="w-24 h-full mb-3 mr-3 rounded-lg sm:mb-0" :src="article.cover">
+                  <div class="text-gray-600 dark:text-gray-400">
+                    <h2 class="text-base font-normal text-gray-900 dark:text-white" v-html="article.title"></h2>
+                    <span class="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
+                      <svg class="inline w-2.5 h-2.5 mr-2 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M5 1v3m5-3v3m5-3v3M1 7h18M5 11h10M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z">
                         </path>
@@ -245,174 +259,163 @@
                   </div>
                 </a>
               </li>
-
             </ol>
+
             <!-- 分页 -->
             <div class="flex mt-7">
-              <a v-if="current>1" @click="prePage" class="flex items-center justify-center px-3 h-8 me-3 text-xs font-medium text-gray-500 border 
-                                  border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-700 
-                                  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              <a v-if="current > 1" @click="prePage" class="flex items-center justify-center px-3 h-8 me-3 text-xs font-medium text-gray-500 border 
+                              border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-700 
+                              dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
                 </svg>
               </a>
 
-              <a v-if="current<pages" @click="nextPage" class="flex ml-auto items-center justify-center px-3 h-8 text-xs font-medium text-gray-500 
-                                  border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:border-gray-600 
-                               dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              <a v-if="current < pages" @click="nextPage" class="flex ml-auto items-center justify-center px-3 h-8 text-xs font-medium text-gray-500 
+                              border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:border-gray-600 
+                           dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                 </svg>
               </a>
             </div>
-
           </div>
           <!-- 未搜索到结果提示 -->
           <div v-else class="flex items-center justify-center flex-col mb-10">
-            <svg class="w-50 h-50" height="200" node-id="1" sillyvg="true" template-height="1000" template-width="1287" version="1.1" viewBox="0 0 466 584" width="466"
+            <svg class="w-50 h-50" height="200" node-id="1" sillyvg="true" template-height="1000" template-width="1287" version="1.1" viewBox="0 0 1287 1000" width="1287"
               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <defs node-id="46"></defs>
-              <g node-id="127">
-                <path
-                  d="M 152.90 563.20 C 152.90 574.51 118.67 583.68 76.45 583.68 C 34.23 583.68 -0.00 574.51 -0.00 563.20 C -0.00 551.89 34.23 542.72 76.45 542.72 C 118.67 542.72 152.90 551.89 152.90 563.20 Z"
-                  fill="#d6d6d6" fill-rule="nonzero" group-id="1" node-id="50" stroke="none" target-height="40.960022" target-width="152.9" target-x="-0" target-y="542.72" />
-                <path
-                  d="M 278.77 579.27 C 272.24 579.27 265.68 578.69 259.34 578.12 C 253.15 577.57 246.75 577.01 240.53 577.01 L 238.88 577.01 C 230.21 577.15 221.37 577.63 212.82 578.09 C 202.49 578.65 191.82 579.23 181.25 579.23 C 179.68 579.23 178.12 579.23 176.56 579.23 C 162.31 578.99 142.80 578.65 129.89 567.16 C 106.00 545.86 119.00 508.76 130.55 476.00 C 134.38 465.09 138.01 454.79 140.27 445.37 C 145.27 424.37 145.62 401.80 145.93 379.94 C 146.09 368.16 146.27 355.94 147.17 344.23 C 149.60 312.84 153.52 279.99 172.07 253.56 C 193.89 222.51 229.46 204.02 267.41 204.00 L 267.41 204.00 C 290.01 203.97 312.14 210.54 331.05 222.92 C 371.16 249.14 380.25 289.86 386.68 332.81 C 387.68 339.81 388.78 349.81 389.90 360.41 C 391.74 377.93 393.83 397.78 396.38 408.75 C 410.28 468.48 426.71 500.01 460.90 557.75 C 463.32 561.85 463.37 566.93 461.01 571.06 C 458.65 575.20 454.26 577.75 449.50 577.75 L 449.40 577.75 C 445.61 577.75 441.81 577.50 438.13 577.25 C 434.45 577.00 430.89 576.77 427.33 576.77 C 415.78 576.77 404.10 577.31 392.80 577.77 C 381.50 578.23 369.69 578.77 358.09 578.77 L 358.00 578.77 C 352.00 578.77 346.00 578.26 340.12 577.77 C 334.43 577.29 328.54 576.77 322.82 576.77 L 322.71 576.77 C 315.42 576.77 307.94 577.38 300.71 577.98 C 294.16 578.52 287.38 579.08 280.66 579.19 Z"
-                  fill="#23221d" fill-rule="nonzero" group-id="1" node-id="52" stroke="none" target-height="375.30313" target-width="357.3664" target-x="106" target-y="203.96689" />
-                <path
-                  d="M 267.41 207.50 C 289.33 207.51 310.78 213.88 329.14 225.85 C 368.20 251.39 376.97 291.59 383.22 333.32 C 385.97 351.74 388.82 391.66 392.97 409.54 C 407.10 470.28 424.47 503.09 457.89 559.48 C 459.67 562.49 459.69 566.23 457.96 569.26 C 456.22 572.30 453.00 574.18 449.50 574.18 L 449.41 574.18 C 442.05 574.18 434.69 573.18 427.33 573.18 L 427.23 573.18 C 404.18 573.18 381.13 575.24 358.08 575.27 L 358.00 575.27 C 346.28 575.27 334.55 573.27 322.82 573.27 L 322.70 573.27 C 308.70 573.27 294.62 575.45 280.58 575.69 L 278.81 575.69 C 266.06 575.69 253.31 573.42 240.57 573.42 L 238.86 573.42 C 219.66 573.74 200.47 575.64 181.29 575.64 C 179.75 575.64 178.20 575.64 176.66 575.64 C 161.77 575.39 143.92 574.84 132.25 564.46 C 102.73 538.18 134.50 484.58 143.71 446.16 C 151.56 413.43 148.12 377.94 150.71 344.48 C 153.08 313.88 156.87 281.35 174.98 255.55 C 196.21 225.50 230.67 207.58 267.46 207.44 M 267.46 200.44 C 228.39 200.58 191.80 219.62 169.26 251.53 C 150.19 278.68 146.20 312.07 143.73 343.94 C 142.82 355.81 142.64 368.04 142.48 379.87 C 142.17 401.54 141.85 423.95 136.91 444.53 C 134.70 453.78 131.10 464.00 127.30 474.81 C 115.42 508.58 101.96 546.81 127.61 569.68 C 141.49 582.04 161.75 582.39 176.55 582.68 C 178.09 582.68 179.69 582.68 181.30 582.68 C 191.95 582.68 202.69 582.10 213.07 581.54 C 221.58 581.08 230.39 580.60 238.99 580.46 L 240.58 580.46 C 246.64 580.46 252.68 581.00 259.08 581.57 C 265.48 582.14 272.14 582.73 278.82 582.73 L 280.72 582.73 C 287.55 582.61 294.39 582.05 301.00 581.51 C 308.49 580.89 315.57 580.31 322.71 580.31 L 322.83 580.31 C 328.41 580.31 333.96 580.77 339.83 581.26 C 345.70 581.75 351.83 582.26 358.00 582.26 L 358.14 582.26 C 369.81 582.26 381.60 581.72 393.01 581.26 C 404.26 580.76 415.90 580.26 427.28 580.26 L 427.37 580.26 C 430.82 580.26 434.28 580.49 437.94 580.74 C 441.60 580.99 445.53 581.24 449.45 581.24 L 449.55 581.24 C 455.56 581.23 461.11 578.01 464.08 572.78 C 467.06 567.56 467.01 561.14 463.95 555.97 C 429.95 498.61 413.61 467.27 399.83 408.02 C 397.33 397.26 395.25 377.52 393.42 360.10 C 392.29 349.45 391.23 339.40 390.18 332.35 C 387.30 313.12 383.52 290.93 374.97 270.84 C 365.70 249.06 351.97 232.45 332.97 220.05 C 313.48 207.30 290.70 200.53 267.41 200.56 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="54" stroke="none" target-height="382.28998" target-width="365.09753" target-x="101.96" target-y="200.44" />
-                <path
-                  d="M 150.66 344.54 C 153.03 313.94 156.82 281.41 174.93 255.61 C 195.93 225.69 230.86 208.50 267.41 208.50 C 289.25 208.50 310.86 213.89 329.14 225.85 C 368.20 251.39 375.97 291.59 382.22 333.32 C 384.97 351.74 386.82 391.66 390.97 409.54 C 405.10 470.28 424.47 503.09 457.89 559.48 L 457.89 559.48 C 424.47 503.09 407.10 465.05 393.00 404.32 C 388.85 386.44 386.00 346.51 383.25 328.10 C 377.00 286.37 368.25 246.16 329.17 220.62 C 278.15 187.36 209.94 200.52 174.96 250.38 C 156.85 276.19 153.06 308.71 150.69 339.31"
-                  fill="#33322d" fill-rule="nonzero" group-id="1" node-id="56" stroke="none" target-height="372.1207" target-width="307.23" target-x="150.66" target-y="187.35928" />
-                <path
-                  d="M 168.72 414.78 L 153.82 425.15 L 147.67 421.57 C 150.19 396.11 148.72 369.75 150.67 344.57 C 152.67 318.41 155.76 290.84 167.92 267.27 C 147.59 356.21 168.72 414.78 168.72 414.78 Z"
-                  fill="#2d2c28" fill-rule="nonzero" group-id="1" node-id="58" stroke="none" target-height="157.88" target-width="21.130005" target-x="147.59" target-y="267.27" />
-                <path
-                  d="M 344.76 318.00 C 344.76 372.60 316.50 403.80 265.91 403.80 C 215.32 403.80 187.00 372.63 187.00 318.00 C 187.00 263.37 215.31 229.73 265.89 229.73 C 316.47 229.73 344.76 263.42 344.76 318.00 Z"
-                  fill="#ffffff" fill-rule="nonzero" group-id="1" node-id="60" stroke="none" target-height="174.06999" target-width="157.76001" target-x="187" target-y="229.73" />
-                <path
-                  d="M 234.12 299.75 C 234.12 306.38 229.12 308.32 223.00 308.32 C 216.88 308.32 211.88 306.38 211.88 299.75 C 211.88 293.12 216.88 291.55 223.00 291.55 C 229.12 291.55 234.12 293.13 234.12 299.75 Z"
-                  fill="#23221d" fill-rule="nonzero" group-id="1" node-id="62" stroke="none" target-height="16.77002" target-width="22.23999" target-x="211.88" target-y="291.55" />
-                <path
-                  d="M 231.00 313.57 C 231.00 314.75 227.43 315.10 223.00 315.10 C 218.57 315.10 215.00 314.75 215.00 313.57 C 215.00 312.39 218.57 312.11 223.00 312.11 C 227.43 312.11 231.00 312.39 231.00 313.57 Z"
-                  fill="#23221d" fill-rule="nonzero" group-id="1" node-id="64" stroke="none" target-height="2.9900208" target-width="16" target-x="215" target-y="312.11" />
-                <path
-                  d="M 232.75 284.22 C 232.79 284.83 232.51 285.42 232.00 285.77 C 231.50 286.12 230.85 286.18 230.29 285.92 C 226.41 283.84 221.76 283.80 217.85 285.82 C 217.24 286.11 216.52 286.02 215.99 285.59 C 215.47 285.17 215.23 284.48 215.39 283.82 C 217.19 272.57 223.51 263.18 232.07 258.27 C 232.71 257.94 233.49 258.03 234.04 258.50 C 234.59 258.98 234.80 259.73 234.57 260.42 C 232.73 267.51 232.69 275.58 232.75 284.22 Z"
-                  fill="#e55151" fill-rule="nonzero" group-id="1" node-id="66" stroke="none" target-height="28.235626" target-width="19.566422" target-x="215.23387" target-y="257.93958" />
-                <path
-                  d="M 232.84 324.00 C 232.84 321.89 231.13 320.51 229.61 321.39 C 225.52 323.82 220.44 323.86 216.32 321.49 C 214.70 320.58 212.90 322.43 213.23 324.63 C 215.35 338.91 222.23 350.85 231.41 357.38 C 233.14 358.60 235.24 356.59 234.74 354.17 C 232.86 345.13 232.79 334.91 232.84 324.00 Z"
-                  fill="#e55151" fill-rule="nonzero" group-id="1" node-id="68" stroke="none" target-height="38.089996" target-width="22.340012" target-x="212.9" target-y="320.51" />
-                <path
-                  d="M 297.67 299.75 C 297.67 306.38 302.67 308.32 308.78 308.32 C 314.89 308.32 319.90 306.38 319.90 299.75 C 319.90 293.12 314.90 291.55 308.78 291.55 C 302.66 291.55 297.67 293.13 297.67 299.75 Z"
-                  fill="#23221d" fill-rule="nonzero" group-id="1" node-id="70" stroke="none" target-height="16.77002" target-width="22.22998" target-x="297.67" target-y="291.55" />
-                <path
-                  d="M 300.80 313.57 C 300.80 314.75 304.37 315.10 308.80 315.10 C 313.23 315.10 316.80 314.75 316.80 313.57 C 316.80 312.39 313.23 312.11 308.80 312.11 C 304.37 312.11 300.80 312.39 300.80 313.57 Z"
-                  fill="#23221d" fill-rule="nonzero" group-id="1" node-id="72" stroke="none" target-height="2.9900208" target-width="16" target-x="300.8" target-y="312.11" />
-                <path
-                  d="M 299.00 284.22 C 298.95 284.83 299.23 285.43 299.74 285.78 C 300.25 286.13 300.90 286.18 301.46 285.92 C 305.33 283.84 309.98 283.80 313.89 285.82 C 314.50 286.11 315.22 286.02 315.75 285.59 C 316.27 285.17 316.51 284.48 316.35 283.82 C 314.56 272.57 308.23 263.18 299.67 258.27 C 299.03 257.93 298.24 258.03 297.70 258.50 C 297.15 258.97 296.94 259.73 297.18 260.42 C 299.05 267.51 299.09 275.58 299.00 284.22 Z"
-                  fill="#e55151" fill-rule="nonzero" group-id="1" node-id="74" stroke="none" target-height="28.246826" target-width="19.563873" target-x="296.94226" target-y="257.9349" />
-                <path
-                  d="M 298.94 324.00 C 298.94 321.89 300.66 320.51 302.18 321.39 C 306.26 323.82 311.34 323.86 315.46 321.49 C 317.09 320.58 318.88 322.43 318.56 324.63 C 316.43 338.91 309.61 350.85 300.37 357.38 C 298.64 358.60 296.54 356.59 297.05 354.17 C 298.92 345.13 299.00 334.91 298.94 324.00 Z"
-                  fill="#e55151" fill-rule="nonzero" group-id="1" node-id="76" stroke="none" target-height="38.089996" target-width="22.339996" target-x="296.54" target-y="320.51" />
-                <path
-                  d="M 280.53 371.58 C 280.53 378.50 272.90 379.13 265.63 379.13 C 258.36 379.13 251.25 378.39 251.25 371.58 C 251.25 365.27 258.36 364.58 265.63 364.58 C 272.90 364.58 280.53 365.38 280.53 371.58 Z"
-                  fill="#23221d" fill-rule="nonzero" group-id="1" node-id="78" stroke="none" target-height="14.550018" target-width="29.279999" target-x="251.25" target-y="364.58" />
-                <path
-                  d="M 272.59 384.24 C 272.59 385.51 269.10 386.41 265.77 386.41 C 262.44 386.41 259.19 385.49 259.19 384.24 C 259.19 382.99 262.45 383.75 265.77 383.75 C 269.09 383.75 272.59 383.10 272.59 384.24 Z"
-                  fill="#e55151" fill-rule="nonzero" group-id="1" node-id="80" stroke="none" target-height="3.4200134" target-width="13.399994" target-x="259.19" target-y="382.99" />
-                <path
-                  d="M 134.16 522.14 C 136.90 504.14 151.65 477.74 151.65 477.74 L 134.91 474.18 C 123.21 507.53 109.38 544.18 132.21 564.52 C 139.73 571.07 149.38 574.62 159.35 574.52 L 163.00 574.52 C 127.49 568.17 131.35 540.46 134.16 522.14 Z"
-                  fill="#191815" fill-rule="nonzero" group-id="1" node-id="82" stroke="none" target-height="100.44391" target-width="53.620003" target-x="109.38" target-y="474.18" />
-                <path
-                  d="M 319.00 518.61 C 315.12 518.56 311.53 516.53 309.49 513.23 C 307.45 509.92 307.24 505.80 308.94 502.31 C 319.35 481.06 336.94 441.66 337.89 416.48 C 337.96 414.55 339.59 413.04 341.52 413.11 C 343.45 413.18 344.96 414.81 344.89 416.74 C 343.89 443.22 325.89 483.65 315.23 505.39 C 314.47 506.94 314.71 508.80 315.84 510.11 C 316.98 511.42 318.78 511.93 320.43 511.39 C 366.43 495.95 374.77 450.12 374.84 449.66 C 375.16 447.75 376.97 446.47 378.88 446.79 C 380.79 447.11 382.07 448.92 381.75 450.83 C 381.40 452.88 372.69 501.22 322.66 518.02 C 321.48 518.42 320.24 518.61 319.00 518.61 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="84" stroke="none" target-height="105.57648" target-width="74.83212" target-x="307.24097" target-y="413.0382" />
-                <path
-                  d="M 148.75 475.83 C 148.75 475.83 103.31 476.69 68.29 439.23 C 66.15 436.93 65.61 433.57 66.91 430.71 C 68.20 427.84 71.09 426.04 74.23 426.13 C 98.13 426.79 141.85 426.44 165.76 416.61"
-                  fill="#23221d" fill-rule="nonzero" group-id="1" node-id="86" stroke="none" target-height="60.080017" target-width="100.15115" target-x="65.60884" target-y="416.61" />
-                <path
-                  d="M 148.35 479.34 C 143.11 479.34 99.92 478.19 65.73 441.62 C 62.62 438.29 61.82 433.41 63.70 429.26 C 65.58 425.11 69.76 422.49 74.32 422.62 C 97.97 423.28 141.12 422.95 164.43 413.36 C 166.22 412.63 168.27 413.48 169.00 415.27 C 169.73 417.06 168.88 419.11 167.09 419.84 C 142.59 429.91 98.34 430.28 74.09 429.62 L 74.00 429.62 C 72.31 429.62 70.77 430.62 70.10 432.17 C 69.36 433.73 69.66 435.59 70.86 436.84 C 104.34 472.66 148.26 472.32 148.69 472.33 L 148.75 472.33 C 150.68 472.31 152.27 473.86 152.28 475.80 C 152.30 477.73 150.75 479.31 148.82 479.33 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="88" stroke="none" target-height="66.71454" target-width="107.91237" target-x="61.822174" target-y="412.62546" />
-                <path
-                  d="M 341.59 413.35 C 341.59 413.35 353.01 412.35 352.06 433.97 C 351.11 455.59 322.81 496.97 311.90 510.35 L 315.58 493.60 L 325.10 474.60 L 336.52 442.60 L 339.05 417.38 L 339.85 414.05 Z"
-                  fill="#2d2c28" fill-rule="nonzero" group-id="1" node-id="90" stroke="none" target-height="98" target-width="41.110016" target-x="311.9" target-y="412.35" />
-                <path
-                  d="M 379.86 447.08 C 379.86 447.08 387.48 453.42 383.25 468.01 C 379.02 482.60 361.57 510.35 321.50 518.12 L 335.50 507.34 L 350.30 498.25 L 359.61 486.83 L 368.91 474.99 L 373.98 461.85 Z"
-                  fill="#191815" fill-rule="nonzero" group-id="1" node-id="92" stroke="none" target-height="71.04001" target-width="65.98001" target-x="321.5" target-y="447.08" />
-                <path
-                  d="M 319.00 518.61 C 315.12 518.56 311.53 516.53 309.49 513.23 C 307.45 509.92 307.24 505.80 308.94 502.31 C 319.35 481.06 336.94 441.66 337.89 416.48 C 337.96 414.55 339.59 413.04 341.52 413.11 C 343.45 413.18 344.96 414.81 344.89 416.74 C 343.89 443.22 325.89 483.65 315.23 505.39 C 314.47 506.94 314.71 508.80 315.84 510.11 C 316.98 511.42 318.78 511.93 320.43 511.39 C 366.43 495.95 374.77 450.12 374.84 449.66 C 375.16 447.75 376.97 446.47 378.88 446.79 C 380.79 447.11 382.07 448.92 381.75 450.83 C 381.40 452.88 372.69 501.22 322.66 518.02 C 321.48 518.42 320.24 518.61 319.00 518.61 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="94" stroke="none" target-height="105.57648" target-width="74.83212" target-x="307.24097" target-y="413.0382" />
-                <path
-                  d="M 152.21 476.39 L 149.06 474.71 L 147.67 474.19 L 141.48 475.42 C 127.90 474.05 97.67 468.15 71.88 442.91 C 107.35 464.48 144.19 459.39 149.38 463.99 C 150.18 464.70 150.87 465.51 151.44 466.42 L 151.44 466.42 C 154.25 471.00 152.21 476.39 152.21 476.39 Z"
-                  fill="#191815" fill-rule="nonzero" group-id="1" node-id="96" stroke="none" target-height="33.48001" target-width="82.37" target-x="71.88" target-y="442.91" />
-                <path
-                  d="M 161.86 430.17 C 161.52 430.34 161.16 430.49 160.79 430.64 C 150.68 434.64 92.58 439.84 67.79 429.26 C 69.29 427.21 71.72 426.03 74.26 426.13 C 98.17 426.79 141.88 426.44 165.80 416.61 L 168.80 414.78 C 168.80 414.78 172.14 425.33 161.86 430.17 Z"
-                  fill="#2d2c28" fill-rule="nonzero" group-id="1" node-id="98" stroke="none" target-height="25.059998" target-width="104.35" target-x="67.79" target-y="414.78" />
-                <path
-                  d="M 168.72 414.78 L 153.90 422.71 L 147.67 421.57 C 150.19 396.11 148.72 369.75 150.67 344.57 C 152.67 318.41 155.76 290.84 167.92 267.27 C 147.59 356.21 168.72 414.78 168.72 414.78 Z"
-                  fill="#191815" fill-rule="nonzero" group-id="1" node-id="100" stroke="none" target-height="155.44" target-width="21.130005" target-x="147.59" target-y="267.27" />
-                <path
-                  d="M 148.35 479.34 C 143.11 479.34 99.92 478.19 65.73 441.62 C 62.62 438.29 61.82 433.41 63.70 429.26 C 65.58 425.11 69.76 422.49 74.32 422.62 C 97.97 423.28 141.12 422.95 164.43 413.36 C 166.22 412.63 168.27 413.48 169.00 415.27 C 169.73 417.06 168.88 419.11 167.09 419.84 C 142.59 429.91 98.34 430.28 74.09 429.62 L 74.00 429.62 C 72.31 429.62 70.77 430.62 70.10 432.17 C 69.36 433.73 69.66 435.59 70.86 436.84 C 104.34 472.66 148.26 472.32 148.69 472.33 L 148.75 472.33 C 150.68 472.31 152.27 473.86 152.28 475.80 C 152.30 477.73 150.75 479.31 148.82 479.33 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="102" stroke="none" target-height="66.71454" target-width="107.91237" target-x="61.822174" target-y="412.62546" />
-                <path
-                  d="M 84.46 525.82 C 83.74 525.82 83.13 525.30 83.00 524.60 C 81.47 516.60 80.17 508.40 79.11 500.31 C 72.55 450.19 78.19 399.09 84.58 355.72 C 92.20 303.95 90.49 241.78 79.50 170.94 C 79.37 170.11 79.94 169.34 80.77 169.21 C 81.60 169.08 82.37 169.65 82.50 170.48 C 93.50 241.62 95.24 304.09 87.58 356.16 C 81.22 399.33 75.58 450.16 82.11 499.92 C 83.16 507.92 84.46 516.07 85.97 524.05 C 86.12 524.86 85.59 525.64 84.78 525.80 C 84.67 525.82 84.57 525.83 84.46 525.82 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="104" stroke="none" target-height="356.74338" target-width="22.689995" target-x="72.55" target-y="169.08298" />
-                <path d="M 168.74 84.37 C 168.74 142.79 145.90 215.11 84.37 215.11 C 22.84 215.11 0.00 145.33 0.00 84.37 C -0.00 37.77 37.77 0.00 84.37 0.00 C 130.97 -0.00 168.74 37.77 168.74 84.37 Z"
-                  fill="#e55151" fill-rule="nonzero" group-id="1" node-id="106" stroke="none" target-height="215.11" target-width="168.74" target-x="0" target-y="0" />
-                <path
-                  d="M 2.63 90.47 C 2.63 43.87 40.40 6.10 87.00 6.10 C 116.00 6.10 141.51 18.69 156.70 40.92 C 137.17 8.43 98.37 -7.05 61.83 3.08 C 25.30 13.21 0.01 46.46 0.00 84.37 C 0.00 118.91 7.34 156.28 24.89 182.19 C 9.24 156.53 2.63 123.23 2.63 90.47 Z"
-                  fill="#ed6b6b" fill-rule="nonzero" group-id="1" node-id="108" stroke="none" target-height="189.23987" target-width="156.7" target-x="0" target-y="-7.0498643" />
-                <path
-                  d="M 84.37 205.50 C 24.60 205.50 1.35 141.67 0.06 82.00 C 0.00 82.81 0.00 83.59 0.00 84.37 C 0.00 145.37 22.84 215.11 84.37 215.11 C 145.90 215.11 168.74 142.79 168.74 84.37 C 168.74 83.56 168.74 82.75 168.68 81.94 C 167.36 139.37 144.09 205.50 84.37 205.50 Z"
-                  fill="#d33737" fill-rule="nonzero" group-id="1" node-id="110" stroke="none" target-height="133.17" target-width="168.74" target-x="0" target-y="81.94" />
-                <g node-id="128">
-                  <path
-                    d="M 50.37 88.67 C 49.97 95.63 49.21 102.57 48.09 109.45 C 47.19 109.64 46.27 109.70 45.35 109.63 C 44.37 109.68 43.38 109.56 42.44 109.27 C 42.78 102.22 43.63 95.20 44.99 88.27 C 45.90 88.27 46.81 88.18 47.91 88.18 C 48.74 88.28 49.56 88.44 50.37 88.67 Z M 59.93 79.11 C 60.12 83.21 60.39 87.31 60.57 91.41 C 63.12 91.77 65.57 92.23 67.95 92.59 C 67.93 94.46 67.59 96.31 66.95 98.06 C 64.88 98.04 62.80 97.89 60.75 97.60 C 60.94 105.08 61.12 112.82 61.12 120.84 C 60.15 121.13 59.13 121.25 58.12 121.20 C 57.12 121.27 56.11 121.21 55.12 121.02 C 54.38 106.08 54.00 92.14 54.00 79.29 C 54.98 79.03 55.99 78.88 57.00 78.83 C 57.98 78.79 58.97 78.89 59.93 79.11 Z M 76.61 102.11 C 76.59 106.50 76.31 110.88 75.79 115.23 C 74.82 115.52 73.80 115.65 72.79 115.60 C 71.83 115.69 70.87 115.47 70.06 114.96 C 69.96 110.57 70.23 106.18 70.88 101.84 C 71.88 101.72 72.88 101.66 73.88 101.65 C 74.81 101.66 75.72 101.80 76.61 102.07 Z M 80.26 69.39 C 80.07 68.03 79.89 66.57 79.80 65.11 C 81.94 64.74 84.10 64.56 86.27 64.57 C 86.54 66.20 86.82 67.85 87.00 69.49 C 91.74 69.58 96.48 69.67 101.21 69.67 C 101.49 67.67 101.85 65.84 102.21 64.02 C 103.21 64.02 104.30 63.93 105.58 63.93 C 106.53 63.97 107.48 64.12 108.40 64.38 C 108.31 66.20 108.13 68.03 107.95 69.67 C 110.41 69.67 112.87 69.76 115.24 69.76 L 115.24 72.31 C 115.26 73.32 115.13 74.33 114.87 75.31 L 107.22 75.31 C 107.04 76.67 106.76 77.95 106.58 79.14 C 105.53 79.38 104.46 79.47 103.39 79.41 C 102.31 79.47 101.22 79.32 100.20 78.95 C 100.29 77.68 100.38 76.40 100.48 75.31 C 95.92 75.31 91.64 75.31 87.81 75.22 C 87.99 76.77 88.08 78.22 88.26 79.50 C 86.28 79.86 84.27 80.04 82.26 80.05 C 81.81 78.46 81.44 76.85 81.17 75.22 L 71.42 75.22 C 71.16 74.24 71.06 73.23 71.14 72.22 C 71.12 71.26 71.28 70.30 71.60 69.39 Z M 113.88 82.70 C 114.06 85.25 114.15 87.89 114.15 90.70 C 114.15 92.92 114.00 95.15 113.70 97.35 C 110.59 97.74 107.45 97.89 104.31 97.81 C 92.83 97.81 82.99 97.62 74.79 97.08 C 74.51 94.36 74.39 91.62 74.42 88.88 C 74.43 86.78 74.55 84.68 74.79 82.59 C 80.44 82.41 87.27 82.32 95.29 82.31 C 102.67 82.29 108.87 82.48 113.88 82.66 Z M 118.44 101.56 C 118.71 104.30 119.07 107.85 119.44 112.32 C 117.49 112.88 115.47 113.15 113.44 113.13 C 112.89 110.58 112.44 108.40 112.16 106.48 C 98.85 106.48 88.28 106.39 80.63 106.21 C 80.29 104.74 80.14 103.24 80.17 101.74 C 85.28 101.47 90.17 101.29 94.75 101.29 C 102.00 101.25 109.87 101.34 118.44 101.52 Z M 80.26 93.23 L 108.00 93.23 L 108.00 86.76 L 102.26 86.76 C 102.17 88.35 101.95 89.94 101.62 91.50 C 100.76 91.70 99.87 91.79 98.98 91.77 C 98.14 91.87 97.29 91.64 96.61 91.13 C 96.59 89.67 96.68 88.21 96.88 86.76 L 91.10 86.76 C 91.02 88.36 90.80 89.94 90.46 91.50 C 89.60 91.70 88.71 91.79 87.82 91.77 C 86.98 91.87 86.13 91.64 85.45 91.13 C 85.44 89.67 85.53 88.21 85.72 86.76 L 80.26 86.76 Z M 94.00 117.00 C 94.20 117.74 94.30 118.51 94.28 119.28 C 94.27 120.01 94.21 120.75 94.10 121.47 C 92.60 121.77 91.07 121.89 89.54 121.83 C 88.26 121.83 87.17 121.83 86.26 121.74 L 86.26 123.93 L 89.36 123.93 C 90.88 123.90 92.40 123.99 93.91 124.20 C 94.11 124.91 94.20 125.65 94.19 126.39 C 94.19 127.09 94.13 127.79 94.00 128.48 C 92.37 128.74 90.73 128.87 89.08 128.85 C 87.99 128.85 87.08 128.76 86.35 128.76 C 86.35 129.49 86.44 130.22 86.44 130.85 C 88.64 131.16 90.87 131.31 93.09 131.31 C 97.47 131.31 100.47 131.04 102.09 130.49 C 102.09 128.39 101.99 122.93 101.81 114.00 C 97.07 113.72 92.43 113.36 88.05 112.81 C 88.01 111.28 88.17 109.75 88.51 108.26 C 94.98 108.44 101.17 108.80 107.19 109.35 C 107.94 112.57 108.27 115.88 108.19 119.19 C 108.27 124.45 108.09 129.71 107.64 134.95 C 105.27 135.87 100.71 136.33 93.97 136.32 C 89.70 136.39 85.44 136.11 81.22 135.50 C 80.76 131.67 80.40 126.94 80.22 121.29 C 80.25 118.08 80.52 114.88 81.04 111.72 L 86.23 111.72 L 86.23 116.82 C 87.23 116.82 88.42 116.73 89.78 116.73 C 91.19 116.71 92.60 116.80 94.00 117.00 Z"
-                    fill="#ffffff" fill-opacity="0.1" fill-rule="nonzero" group-id="1,2" node-id="114" stroke="none" target-height="72.456215" target-width="77" target-x="42.44" target-y="63.93" />
-                </g>
-                <path
-                  d="M 74.00 225.47 C 71.74 225.53 69.63 224.31 68.56 222.31 C 67.80 221.04 67.57 219.52 67.94 218.08 C 69.33 212.96 76.33 213.94 80.09 214.47 L 81.22 214.62 C 83.11 214.85 84.79 215.11 86.33 215.44 C 86.88 215.15 87.41 214.84 87.92 214.50 C 88.34 214.23 88.70 214.00 88.92 213.90 C 90.04 213.35 91.06 212.90 92.05 212.46 C 93.70 211.73 95.41 211.14 97.16 210.69 C 97.68 210.56 102.38 209.47 105.16 211.36 C 106.20 212.06 106.89 213.17 107.05 214.42 C 107.31 216.15 106.74 217.91 105.51 219.15 C 103.34 221.40 99.51 222.15 96.89 221.89 C 93.29 221.43 89.80 220.37 86.55 218.75 C 86.37 218.91 86.21 219.07 86.12 219.16 L 85.82 219.45 C 83.47 221.45 80.30 223.96 76.60 225.07 C 75.76 225.33 74.88 225.46 74.00 225.47 Z M 75.13 217.00 C 73.13 217.00 71.23 217.39 70.84 218.84 C 70.69 219.50 70.81 220.19 71.16 220.77 C 72.07 222.34 73.61 222.77 75.74 222.16 C 78.43 221.22 80.90 219.76 83.02 217.86 C 82.34 217.76 81.63 217.66 80.88 217.57 L 79.69 217.41 C 78.18 217.17 76.66 217.04 75.13 217.00 Z M 89.76 216.86 C 92.12 217.90 94.62 218.57 97.18 218.86 C 99.18 219.05 102.01 218.42 103.35 217.03 C 103.94 216.44 104.21 215.60 104.07 214.78 C 104.04 214.37 103.82 214.00 103.48 213.78 C 102.32 213.00 99.78 213.07 97.87 213.54 C 96.28 213.96 94.72 214.50 93.21 215.16 C 92.28 215.55 91.31 216.00 90.21 216.53 C 90.05 216.64 89.90 216.76 89.76 216.89 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="117" stroke="none" target-height="16.057999" target-width="39.73964" target-x="67.573524" target-y="209.47" />
-                <path
-                  d="M 77.47 238.50 C 76.88 238.49 76.36 238.14 76.12 237.60 C 75.88 237.07 75.98 236.44 76.36 236.00 C 84.57 226.90 84.17 218.00 84.17 217.95 C 84.12 217.12 84.76 216.42 85.58 216.37 C 86.40 216.34 87.10 216.97 87.16 217.79 C 87.16 218.20 87.62 227.99 78.59 238.01 C 78.30 238.32 77.90 238.50 77.47 238.50 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="119" stroke="none" target-height="22.160858" target-width="11.738007" target-x="75.881996" target-y="216.34099" />
-                <path
-                  d="M 112.61 234.85 L 112.44 234.85 C 90.89 232.40 85.35 220.33 85.13 219.85 C 84.81 219.10 85.16 218.23 85.90 217.90 C 86.65 217.57 87.52 217.89 87.87 218.63 C 87.94 218.78 93.10 229.63 112.78 231.90 C 113.61 231.95 114.24 232.66 114.19 233.49 C 114.15 234.31 113.44 234.95 112.61 234.90 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="121" stroke="none" target-height="17.38031" target-width="29.428108" target-x="84.813835" target-y="217.56664" />
-                <path
-                  d="M 80.24 218.62 C 79.57 218.62 78.98 218.18 78.80 217.54 C 78.61 216.89 78.87 216.21 79.44 215.85 C 83.13 213.79 87.49 213.31 91.54 214.51 C 92.08 214.64 92.50 215.05 92.64 215.59 C 92.78 216.12 92.61 216.69 92.21 217.06 C 91.81 217.44 91.23 217.57 90.71 217.39 C 87.48 216.43 84.00 216.79 81.03 218.39 C 80.80 218.54 80.52 218.62 80.24 218.62 Z"
-                  fill="#000000" fill-rule="nonzero" group-id="1" node-id="123" stroke="none" target-height="5.3141785" target-width="14.166504" target-x="78.61151" target-y="213.30879" />
-                <path
-                  d="M 95.52 218.28 C 95.64 220.28 91.64 218.51 86.66 218.80 C 81.68 219.09 77.59 221.34 77.48 219.32 C 77.37 217.30 81.30 215.44 86.29 215.15 C 91.28 214.86 95.41 216.26 95.52 218.28 Z"
-                  fill="#d33737" fill-rule="nonzero" group-id="1" node-id="125" stroke="none" target-height="6.4799957" target-width="18.269997" target-x="77.37" target-y="214.86" />
-              </g>
+              <defs node-id="31"></defs>
+              <path
+                d="M 961.07 520.09 C 961.17 518.75 961.57 517.67 961.57 494.86 C 961.57 493.80 960.98 377.08 946.29 324.85 C 945.86 325.37 945.42 325.87 944.97 326.37 C 945.14 326.79 945.23 327.23 945.24 327.67 C 945.24 332.92 917.12 364.86 865.04 364.86 C 817.41 364.86 797.44 341.92 794.18 341.92 C 793.65 341.92 792.00 342.18 789.03 342.18 C 767.14 342.18 752.48 328.38 752.48 323.09 C 752.54 320.92 754.21 319.14 756.37 318.96 C 756.87 318.74 757.41 318.64 757.95 318.65 C 758.70 318.65 759.55 318.94 761.62 318.94 C 767.49 318.94 772.47 316.16 777.35 312.59 C 772.94 303.86 770.63 294.22 770.58 284.44 C 770.58 249.22 805.98 208.39 867.77 208.39 C 875.21 208.39 882.63 209.12 889.93 210.54 C 839.88 155.14 791.24 133.73 663.30 133.73 C 661.26 133.73 659.10 133.73 656.83 133.72 C 620.10 133.72 553.48 134.73 495.69 168.94 C 512.78 180.02 512.11 197.44 512.65 204.34 C 512.30 220.37 506.52 240.28 506.52 248.45 C 506.52 258.33 511.44 264.27 511.44 268.16 C 511.44 271.00 509.13 273.31 506.29 273.30 C 505.98 273.30 505.68 273.26 505.38 273.19 C 504.30 274.29 502.84 274.92 501.30 274.97 C 494.38 274.97 489.14 258.48 489.14 248.98 C 489.14 226.37 495.51 218.24 495.51 204.42 C 495.51 197.41 495.50 185.75 483.86 185.75 C 475.43 185.75 463.63 196.67 463.63 222.84 C 463.63 223.05 463.63 223.15 463.63 223.20 C 463.65 224.65 463.08 226.05 462.06 227.08 C 461.03 228.11 459.64 228.68 458.18 228.66 C 453.01 228.66 452.70 223.66 452.70 221.79 C 452.70 221.54 452.70 221.34 452.70 221.22 C 452.70 220.02 452.74 218.82 452.81 217.65 C 449.34 216.08 448.92 209.99 448.92 205.44 C 448.92 204.22 448.97 203.01 449.07 201.80 C 396.28 245.05 330.47 350.63 330.47 461.27 C 330.47 469.22 331.40 472.77 333.44 482.09 C 344.54 478.34 358.27 476.03 375.27 476.03 C 429.96 476.03 479.91 500.65 491.96 505.52 C 498.58 433.71 498.94 445.31 499.67 432.66 C 503.22 371.12 563.42 320.00 637.63 320.00 C 664.46 319.95 690.89 326.41 714.67 338.83 C 794.13 380.31 790.80 453.60 791.06 454.70 C 791.57 454.70 792.05 454.72 792.53 454.72 C 793.83 454.72 798.45 454.17 806.53 454.17 C 826.96 454.17 925.45 463.56 953.59 550.33 C 953.98 550.33 954.44 550.33 954.93 550.33 C 956.54 550.33 958.09 550.33 959.59 550.33 C 960.01 541.24 960.43 532.34 960.86 523.06 C 960.13 523.94 959.08 525.80 956.69 525.80 C 955.30 525.80 900.23 447.02 830.12 447.02 C 825.03 447.02 821.19 447.78 819.69 447.78 C 818.88 447.78 815.44 447.25 815.44 443.60 C 815.44 441.53 816.33 440.09 819.74 439.29 C 819.69 439.05 819.66 438.80 819.66 438.56 L 819.66 438.52 C 819.66 435.02 823.18 434.92 826.59 434.92 C 826.80 434.92 827.02 434.92 827.23 434.92 C 828.21 434.92 829.19 434.94 830.17 434.94 C 910.96 435.91 960.94 508.05 960.94 517.38 C 960.94 518.02 960.76 518.64 960.42 519.18 C 960.84 519.77 961.06 520.09 961.07 520.09 Z M 450.12 351.37 C 446.71 351.37 437.78 347.56 431.16 347.56 C 430.91 347.56 430.67 347.57 430.51 347.57 C 430.19 352.95 431.12 360.83 422.29 366.47 C 420.12 367.91 417.57 368.69 414.96 368.70 C 409.61 368.70 400.24 366.83 400.24 355.93 C 400.24 351.54 402.09 349.08 404.05 346.81 C 404.34 346.35 404.64 345.92 404.95 345.51 C 386.94 350.23 387.80 361.75 382.59 361.75 C 380.44 361.71 378.61 360.17 378.21 358.06 C 376.61 357.30 375.64 355.63 375.78 353.86 C 375.78 345.42 391.14 332.91 408.15 332.91 C 415.52 332.91 417.59 336.22 419.70 336.22 C 420.74 336.22 423.86 334.89 429.34 334.89 C 436.80 334.89 449.78 338.87 451.03 343.23 C 452.96 344.24 454.11 345.52 454.11 347.18 C 454.11 347.81 453.60 351.37 450.12 351.37 Z M 513.58 281.57 C 514.51 280.62 515.77 280.06 517.09 279.99 C 519.67 280.02 521.76 282.08 521.82 284.65 C 521.56 286.70 520.61 288.61 519.14 290.08 C 518.17 292.04 516.43 294.05 513.88 294.05 C 510.05 294.05 507.78 290.95 507.78 287.30 C 507.78 284.95 509.10 281.79 513.58 281.57 Z M 484.97 439.01 C 484.97 447.58 485.66 454.08 485.66 454.24 C 485.76 455.24 485.44 456.22 484.77 456.97 C 484.11 457.71 483.16 458.14 482.17 458.15 C 481.27 458.22 480.39 457.87 479.79 457.20 C 478.98 457.81 478.01 458.17 477.00 458.23 C 474.04 458.23 471.91 457.61 471.91 439.19 C 471.91 438.17 471.93 437.14 471.93 436.12 L 471.93 436.00 C 471.93 326.85 573.40 299.96 580.12 299.96 C 582.43 300.02 584.26 301.93 584.20 304.24 C 584.20 304.68 583.84 305.15 583.18 305.64 C 583.71 305.60 584.16 305.57 584.51 305.57 C 585.47 305.47 586.43 305.78 587.14 306.44 C 587.85 307.09 588.24 308.02 588.21 308.99 C 588.21 315.88 484.97 320.40 484.97 439.01 Z M 670.95 246.55 C 670.91 246.60 670.92 246.69 670.86 246.99 C 672.59 247.16 688.39 246.28 688.39 262.65 C 688.39 263.17 687.75 277.12 671.61 277.12 C 657.91 277.12 655.31 265.85 654.51 265.44 C 649.76 270.92 646.54 279.95 646.54 282.66 C 646.54 283.05 646.56 283.47 646.56 283.68 C 646.56 286.14 645.07 288.25 642.29 288.25 C 640.44 288.26 638.81 287.03 638.33 285.24 C 637.22 284.45 636.17 282.95 636.17 280.11 C 636.17 279.56 636.23 279.01 636.36 278.48 C 642.33 255.65 654.47 256.51 656.23 251.05 C 661.88 233.57 676.89 225.02 684.97 225.02 L 685.00 225.02 C 685.67 225.02 689.39 225.04 691.32 226.53 C 693.28 226.87 694.68 228.63 694.57 230.61 C 694.57 237.61 682.63 232.40 670.95 246.55 Z"
+                fill="#5fc690" fill-rule="nonzero" node-id="33" stroke="none" target-height="416.60968" target-width="631.0967" target-x="330.46844" target-y="133.7226" />
+              <path
+                d="M 986.21 550.21 C 979.38 550.21 969.43 550.33 954.93 550.33 C 954.44 550.33 953.98 550.33 953.59 550.33 C 925.45 463.56 826.96 454.17 806.53 454.17 C 798.45 454.17 793.83 454.72 792.53 454.72 C 792.05 454.72 791.57 454.70 791.06 454.70 C 790.80 453.60 794.13 380.31 714.67 338.83 C 690.89 326.41 664.46 319.95 637.63 320.00 C 563.42 320.00 503.22 371.12 499.67 432.66 C 498.94 445.31 498.58 433.71 491.96 505.52 C 479.91 500.65 429.96 476.03 375.27 476.03 C 288.87 476.03 286.90 535.50 285.86 541.24 L 285.86 550.25 C 316.51 687.67 450.98 734.22 571.04 797.67 C 571.50 797.92 572.01 798.06 572.53 798.06 C 575.69 798.06 586.95 781.55 595.68 772.38 C 654.54 844.22 684.17 849.01 692.11 849.01 C 697.30 849.01 703.39 846.04 703.39 839.90 C 703.39 827.57 676.79 801.68 676.79 793.88 C 676.80 793.16 676.90 792.45 677.09 791.76 C 677.37 791.67 677.66 791.63 677.95 791.63 C 684.92 791.63 717.41 819.32 741.04 819.32 C 748.98 819.32 756.57 817.80 756.57 808.28 C 756.57 788.47 712.39 766.99 707.80 757.92 C 717.10 758.43 746.67 763.73 765.82 763.73 C 773.66 763.73 778.47 754.80 778.47 751.69 C 778.47 744.55 758.22 732.07 720.27 723.86 C 732.25 717.29 752.08 711.46 752.08 692.36 C 752.08 689.04 750.80 681.23 742.59 681.23 C 742.20 681.23 742.17 681.25 741.48 681.25 C 741.19 681.25 740.91 681.24 740.62 681.24 C 734.90 681.24 733.19 683.28 680.72 685.38 C 671.44 685.75 666.73 687.91 662.86 688.90 C 676.11 671.89 677.82 670.58 677.82 668.86 C 677.82 645.00 475.26 556.77 475.16 556.73 L 475.30 556.35 C 578.94 556.53 682.69 556.72 786.53 556.90 C 788.22 582.54 789.63 610.21 809.31 610.21 C 825.51 610.21 824.09 607.20 827.96 604.41 C 828.69 605.29 830.39 607.98 841.89 607.98 C 852.29 607.98 857.04 605.66 859.87 603.00 C 863.16 604.31 865.22 605.68 869.37 605.68 C 899.57 605.68 898.53 561.86 899.10 557.20 C 899.58 557.20 900.00 557.19 900.39 557.19 C 901.40 557.19 924.39 557.81 925.63 557.81 C 928.87 557.81 930.42 557.26 932.49 557.26 C 944.20 557.26 992.84 557.38 995.96 557.38 L 996.18 557.38 C 998.00 557.38 1001.14 557.31 1001.14 553.91 C 1001.14 550.73 1000.47 550.21 986.21 550.21 Z M 741.54 688.15 C 744.35 688.15 745.01 689.22 745.01 692.53 C 745.01 713.45 701.65 719.85 701.65 726.62 C 701.65 727.48 702.00 728.30 702.62 728.91 C 703.23 729.51 704.07 729.84 704.93 729.83 C 705.30 729.83 706.54 729.67 708.74 729.67 C 723.14 729.67 757.88 740.39 771.37 751.74 C 768.79 756.76 766.74 756.76 763.96 756.76 C 749.53 756.76 716.41 751.08 709.52 751.08 C 709.42 751.08 709.13 751.06 708.70 751.06 C 706.39 751.06 700.18 751.49 700.18 757.06 C 700.18 769.85 749.54 791.54 749.54 808.09 C 749.54 811.05 748.64 811.33 747.33 811.57 C 745.19 811.98 743.01 812.20 740.83 812.21 C 718.91 812.21 688.96 784.53 676.95 784.53 C 670.07 784.53 669.79 791.73 669.79 793.70 C 669.79 806.22 696.34 829.67 696.34 839.70 C 696.36 840.53 695.76 841.25 694.94 841.39 C 693.91 841.68 692.84 841.85 691.77 841.91 C 664.23 841.91 613.72 783.62 600.25 768.00 C 658.25 693.13 648.38 688.15 741.54 688.15 Z M 490.76 549.26 C 490.07 549.31 489.42 549.41 488.78 549.41 C 462.22 549.41 459.44 549.28 459.34 549.28 C 458.69 549.28 458.38 549.81 456.91 549.81 C 455.51 549.81 454.91 549.52 443.41 545.69 C 444.90 543.61 464.32 523.47 464.32 519.13 C 464.23 517.48 462.89 516.18 461.24 516.15 C 458.05 516.15 460.76 516.90 437.37 541.46 C 436.82 542.15 435.99 542.56 435.10 542.59 C 432.36 542.59 414.34 534.95 402.64 534.95 C 386.84 534.95 373.14 542.27 373.14 553.71 C 373.14 562.49 386.27 569.63 396.95 569.63 C 418.23 569.63 434.40 551.14 437.65 551.14 C 470.14 551.14 638.95 646.47 639.05 646.56 C 627.13 663.68 609.55 685.17 609.55 687.80 C 609.57 689.39 610.85 690.69 612.44 690.72 C 615.83 690.72 624.88 674.81 643.78 650.55 C 652.70 656.33 661.49 662.02 670.46 667.83 C 663.95 676.63 577.29 785.22 571.85 791.10 C 564.79 787.41 557.89 783.82 550.77 780.10 C 556.64 771.76 587.86 736.00 587.86 733.28 C 587.84 731.69 586.56 730.40 584.97 730.38 C 581.68 730.38 567.37 751.05 545.18 777.06 C 301.44 669.62 293.22 565.49 293.22 548.30 C 293.22 547.06 293.26 546.27 293.26 545.97 C 293.26 501.64 330.26 483.04 375.16 483.04 C 430.74 483.04 485.93 510.48 491.37 513.24 C 491.16 525.26 490.96 537.17 490.76 549.26 Z M 429.02 548.09 C 418.10 556.77 408.35 562.57 397.11 562.57 C 392.70 562.57 387.65 562.09 381.22 556.06 C 380.51 555.43 380.11 554.52 380.13 553.57 C 380.13 548.68 387.58 542.07 402.37 542.07 C 410.52 542.07 414.76 543.80 429.02 548.09 Z M 739.92 492.01 C 739.47 495.97 737.70 499.41 735.63 502.94 C 735.28 501.97 734.54 499.00 731.84 499.00 C 731.57 499.00 731.31 499.04 731.05 499.10 C 729.38 499.50 728.23 501.03 728.29 502.74 C 728.29 503.80 728.70 506.69 728.70 507.24 C 728.70 507.54 728.66 507.87 728.64 508.32 C 708.88 514.47 712.92 507.20 710.07 549.65 L 566.83 549.65 C 564.87 528.89 566.67 538.35 538.54 531.40 C 535.63 530.68 521.74 526.12 519.58 517.33 C 517.63 509.45 516.65 501.36 516.66 493.24 C 516.66 429.32 566.17 397.23 571.48 394.57 C 604.86 435.58 628.31 426.74 637.24 431.95 C 635.56 432.64 633.78 433.01 631.97 433.06 C 629.77 433.06 629.07 432.47 627.82 432.47 C 626.98 432.42 626.16 432.73 625.55 433.30 C 624.94 433.88 624.60 434.68 624.60 435.52 C 624.60 439.02 630.38 439.50 632.49 439.50 C 640.51 439.50 644.35 436.24 647.34 434.03 C 677.28 446.25 686.34 474.21 706.09 474.21 C 713.79 474.21 713.81 470.27 713.81 468.52 L 713.81 468.49 C 713.81 468.16 713.77 466.61 713.77 464.12 C 713.77 410.04 725.71 407.29 729.47 407.29 C 729.89 407.29 730.22 407.32 730.40 407.32 C 731.87 407.32 743.95 408.16 744.94 419.84 C 745.28 423.89 745.45 427.93 745.45 431.97 C 745.45 440.45 745.03 446.71 739.92 492.01 Z M 887.06 586.04 C 884.50 594.64 876.76 598.53 869.22 598.53 C 866.48 598.53 866.47 598.10 864.26 597.43 C 866.12 590.94 867.01 584.21 866.90 577.47 C 866.90 577.45 866.90 577.21 866.90 576.76 C 866.76 566.38 865.81 556.03 864.08 545.80 C 863.98 544.18 862.64 542.91 861.02 542.89 C 858.12 542.89 857.91 545.34 857.91 547.75 C 857.91 552.06 859.77 559.03 859.77 575.93 C 859.77 594.07 858.48 600.88 843.69 600.88 C 838.11 600.88 835.71 600.48 833.44 597.69 C 832.52 596.66 832.00 595.33 831.98 593.94 C 831.98 592.19 832.98 589.70 832.98 581.50 C 832.98 566.51 830.82 557.29 829.56 546.66 C 829.49 545.02 828.16 543.70 826.52 543.63 C 823.45 543.63 823.40 546.86 823.40 548.34 C 823.40 552.33 826.06 571.78 826.06 582.19 C 826.06 602.22 819.59 603.27 812.16 603.27 C 811.28 603.27 810.40 603.26 809.51 603.26 C 792.47 603.26 794.54 562.06 793.24 555.37 C 792.33 550.70 790.43 547.05 777.84 547.05 C 777.12 547.05 776.35 547.16 775.24 547.24 C 784.12 534.76 790.18 526.39 844.36 526.39 C 845.85 526.39 847.31 526.39 848.73 526.39 C 876.65 526.39 891.88 527.14 891.88 558.11 C 891.88 567.65 889.77 576.90 887.06 586.04 Z M 898.61 550.15 C 895.05 531.57 890.12 519.48 857.52 519.48 C 855.96 519.48 855.43 519.52 846.78 519.52 C 846.22 519.52 845.66 519.52 845.09 519.52 C 801.46 519.52 798.95 523.85 792.65 524.59 C 792.24 503.70 791.29 482.92 791.20 461.85 C 796.76 461.49 799.37 461.12 806.08 461.12 C 882.46 461.12 937.51 512.95 946.03 550.15 Z"
+                fill="#000000" fill-rule="nonzero" node-id="35" stroke="none" target-height="529.05273" target-width="715.2872" target-x="285.85657" target-y="319.95316" />
+              <path
+                d="M 867.77 208.39 C 805.98 208.39 770.58 249.22 770.58 284.44 C 770.63 294.22 772.94 303.86 777.35 312.59 C 772.47 316.16 767.49 318.94 761.61 318.94 C 759.55 318.94 758.70 318.65 757.95 318.65 C 757.10 318.56 756.26 318.84 755.63 319.41 C 755.00 319.99 754.64 320.81 754.66 321.66 C 754.66 325.45 767.54 335.42 779.14 335.42 C 784.78 335.42 790.75 333.32 792.15 333.32 C 795.36 333.32 816.60 359.41 864.93 359.41 C 910.08 359.41 961.84 331.33 961.84 283.07 C 961.84 240.22 917.27 208.39 867.77 208.39 Z M 864.92 352.47 C 817.31 352.47 798.01 325.68 793.72 325.68 C 791.55 325.68 786.69 328.39 779.54 328.39 C 775.30 328.42 771.14 327.26 767.51 325.06 C 771.07 323.85 776.25 323.18 784.30 315.81 C 785.29 315.07 785.93 313.94 786.05 312.71 C 786.05 310.41 783.86 310.07 782.61 307.25 C 779.35 300.13 777.63 292.40 777.57 284.58 C 777.57 248.93 814.90 215.39 867.57 215.39 C 910.53 215.39 954.81 241.74 954.81 283.38 C 954.81 319.02 917.37 352.47 864.92 352.47 Z"
+                fill="#000000" fill-rule="nonzero" node-id="37" stroke="none" target-height="151.01958" target-width="207.19415" target-x="754.64343" target-y="208.39409" />
+              <path
+                d="M 454.67 218.04 C 455.98 218.07 457.24 217.55 458.14 216.59 C 459.04 215.64 459.48 214.35 459.37 213.04 C 459.37 211.88 458.93 209.78 458.93 207.34 C 458.93 191.60 469.26 177.04 485.54 177.04 C 489.93 177.04 501.73 182.56 501.73 204.26 C 501.73 219.77 495.77 236.45 495.77 248.01 C 495.77 256.03 499.38 273.30 506.29 273.30 C 509.13 273.31 511.44 271.00 511.44 268.16 C 511.44 264.27 506.52 258.33 506.52 248.45 C 506.52 240.28 512.30 220.37 512.65 204.34 C 512.11 197.43 512.78 179.97 495.61 168.88 C 492.38 166.80 488.87 166.35 485.22 166.35 C 462.51 166.35 448.92 185.25 448.92 205.44 C 448.92 210.70 449.47 218.04 454.67 218.04 Z"
+                fill="#000000" fill-rule="nonzero" node-id="39" stroke="none" target-height="106.95955" target-width="63.86621" target-x="448.91815" target-y="166.34673" />
+              <path
+                d="M 477.94 440.36 C 478.43 453.49 477.96 458.15 482.17 458.15 C 483.16 458.14 484.11 457.71 484.77 456.97 C 485.44 456.22 485.76 455.24 485.66 454.24 C 485.66 454.08 484.97 447.58 484.97 439.01 C 484.97 320.40 588.21 315.88 588.21 308.99 C 588.24 308.02 587.85 307.09 587.14 306.44 C 586.43 305.78 585.47 305.47 584.51 305.57 C 573.81 305.57 478.47 325.11 477.94 440.36 Z"
+                fill="#000000" fill-rule="nonzero" node-id="41" stroke="none" target-height="152.67892" target-width="110.29831" target-x="477.93912" target-y="305.46857" />
+              <path
+                d="M 830.17 434.94 C 829.19 434.94 828.21 434.92 827.23 434.92 C 827.02 434.92 826.80 434.92 826.59 434.92 C 823.18 434.92 819.66 435.02 819.66 438.52 L 819.66 438.56 C 819.66 438.98 819.75 442.00 823.87 442.00 C 824.47 442.00 826.21 441.86 829.37 441.86 C 916.21 441.86 952.77 520.80 957.55 520.80 C 959.43 520.79 960.95 519.26 960.94 517.38 C 960.94 508.05 910.96 435.91 830.17 434.94 Z"
+                fill="#000000" fill-rule="nonzero" node-id="43" stroke="none" target-height="85.87799" target-width="141.29077" target-x="819.6579" target-y="434.9206" />
+              <path
+                d="M 379.87 358.46 C 381.55 358.47 382.96 357.20 383.11 355.53 C 383.11 354.48 382.57 354.14 382.57 353.26 C 382.57 349.92 395.14 339.90 407.62 339.90 C 408.35 339.90 409.09 339.95 409.82 339.95 C 409.12 341.64 401.66 346.31 401.66 354.75 C 401.66 360.08 404.76 364.70 410.19 364.70 C 415.57 364.70 425.06 359.53 425.06 350.12 C 425.06 347.53 424.39 345.48 423.71 342.69 C 425.45 342.14 427.27 341.87 429.10 341.89 C 439.47 341.89 444.78 347.25 447.95 347.25 C 449.74 347.17 451.14 345.69 451.14 343.90 C 451.14 339.29 437.18 334.89 429.34 334.89 C 423.86 334.89 420.74 336.22 419.71 336.22 C 417.59 336.22 415.52 332.91 408.15 332.91 C 391.14 332.91 375.78 345.42 375.78 353.86 C 375.68 355.02 376.06 356.17 376.83 357.04 C 377.61 357.91 378.71 358.43 379.87 358.46 Z M 416.68 344.83 C 417.50 346.37 417.95 348.07 417.99 349.81 C 417.99 355.60 412.17 357.64 410.42 357.64 C 409.68 357.64 408.72 357.34 408.72 354.73 C 408.72 350.44 412.57 346.67 416.68 344.83 Z"
+                fill="#000000" fill-rule="nonzero" node-id="45" stroke="none" target-height="31.787598" target-width="75.46402" target-x="375.6795" target-y="332.91104" />
+              <path
+                d="M 640.77 286.08 C 642.44 285.98 643.78 284.68 643.92 283.03 C 643.92 281.93 643.22 281.62 643.22 280.04 C 643.22 279.88 646.25 267.12 654.58 262.04 C 654.82 262.97 656.64 273.61 667.05 273.61 C 673.60 273.61 681.87 267.97 681.87 261.45 C 681.87 255.82 676.14 250.74 666.40 250.74 C 665.56 250.74 664.70 250.77 663.81 250.82 C 668.49 239.32 679.41 231.45 686.05 231.45 C 687.25 231.51 688.45 231.65 689.63 231.86 C 692.07 231.86 692.50 229.34 692.50 228.80 C 692.50 225.05 685.92 225.02 685.00 225.02 L 684.97 225.02 C 676.89 225.02 661.88 233.57 656.23 251.05 C 654.47 256.51 642.33 255.65 636.36 278.48 C 636.23 279.01 636.17 279.56 636.17 280.11 C 636.17 285.48 639.89 286.08 640.77 286.08 Z M 666.91 257.79 C 670.93 257.79 674.74 259.37 674.74 261.44 C 674.74 263.75 670.16 266.53 667.05 266.53 C 661.42 266.53 661.69 260.41 661.50 258.64 C 663.25 258.09 665.08 257.81 666.91 257.79 Z"
+                fill="#000000" fill-rule="nonzero" node-id="47" stroke="none" target-height="61.05577" target-width="56.33368" target-x="636.1679" target-y="225.02061" />
+              <path
+                d="M 606.35 798.42 C 605.71 797.35 604.57 796.68 603.32 796.65 C 602.43 796.65 601.57 796.99 600.94 797.62 C 600.30 798.24 599.94 799.09 599.93 799.99 C 599.93 813.49 662.66 866.28 689.31 866.28 C 690.23 866.28 691.12 865.91 691.77 865.25 C 692.42 864.59 692.78 863.70 692.76 862.78 C 692.76 857.51 641.15 850.82 606.35 798.42 Z"
+                fill="#000000" fill-rule="nonzero" node-id="49" stroke="none" target-height="69.63153" target-width="92.84186" target-x="599.93427" target-y="796.6459" />
+              <path
+                d="M 724.85 587.67 C 724.91 587.67 725.00 587.68 725.12 587.68 C 726.09 587.68 728.76 587.53 728.76 584.83 C 728.76 582.03 725.94 581.94 724.16 581.94 C 715.83 581.94 590.61 582.11 590.52 582.11 C 590.39 582.11 590.27 582.11 590.15 582.11 C 590.10 582.11 589.96 582.10 589.77 582.10 C 588.73 582.10 586.02 582.31 586.02 584.96 C 586.02 587.79 588.88 587.80 590.68 587.80 L 590.73 587.80 C 590.94 587.80 591.15 587.80 591.35 587.80 C 593.25 587.80 602.50 587.81 636.51 587.81 C 643.46 587.81 650.40 587.81 657.35 587.81 L 657.35 587.67 C 663.46 587.67 669.56 587.67 675.67 587.67 C 710.93 587.67 722.90 587.67 723.78 587.67 C 724.13 587.67 724.49 587.67 724.85 587.67 Z"
+                fill="#000000" fill-rule="nonzero" node-id="51" stroke="none" target-height="5.867737" target-width="142.73828" target-x="586.01874" target-y="581.94104" />
+              <path
+                d="M 832.34 618.75 C 801.80 618.75 781.30 618.66 767.54 618.66 C 740.57 618.66 739.51 619.02 739.51 621.20 C 739.51 621.39 739.52 621.58 739.52 621.79 C 739.53 623.13 740.49 624.27 741.80 624.51 C 742.34 624.60 742.89 624.64 743.45 624.63 C 743.72 624.63 743.99 624.62 744.26 624.62 C 745.41 624.62 751.48 624.63 772.44 624.63 C 777.53 624.63 782.62 624.63 787.71 624.63 L 787.71 624.51 C 793.28 624.51 798.84 624.51 804.40 624.51 C 813.93 624.51 820.63 624.60 825.34 624.60 C 835.15 624.60 836.29 624.18 836.29 621.59 C 836.29 618.85 833.59 618.75 832.34 618.75 Z"
+                fill="#000000" fill-rule="nonzero" node-id="53" stroke="none" target-height="5.9813232" target-width="96.77783" target-x="739.5124" target-y="618.6565" />
+              <path
+                d="M 698.26 674.57 C 698.75 674.63 699.24 674.66 699.73 674.66 C 743.95 669.75 743.98 669.88 743.98 666.17 C 744.00 665.21 743.61 664.30 742.91 663.65 C 742.21 663.00 741.27 662.68 740.32 662.76 C 738.63 662.76 701.04 667.37 698.26 667.90 C 696.63 668.18 695.45 669.59 695.45 671.24 C 695.45 672.88 696.64 674.29 698.26 674.57 Z"
+                fill="#000000" fill-rule="nonzero" node-id="55" stroke="none" target-height="11.983459" target-width="48.551636" target-x="695.44556" target-y="662.6782" />
+              <path
+                d="M 511.39 286.08 C 511.28 287.41 511.74 288.73 512.66 289.71 C 513.57 290.69 514.85 291.24 516.19 291.23 C 520.44 291.23 521.82 285.51 521.82 284.65 C 521.76 282.08 519.67 280.02 517.09 279.99 C 514.64 279.99 511.78 282.46 511.39 286.01 C 511.39 286.04 511.39 286.06 511.39 286.08 Z"
+                fill="#000000" fill-rule="nonzero" node-id="57" stroke="none" target-height="11.24588" target-width="10.538055" target-x="511.2839" target-y="279.99405" />
+              <path
+                d="M 728.74 464.25 C 733.15 436.46 733.54 434.44 733.54 433.22 C 733.54 432.30 733.17 431.42 732.51 430.77 C 731.85 430.13 730.96 429.78 730.04 429.80 C 726.09 429.80 726.73 431.72 721.35 465.94 C 721.26 466.51 721.21 467.08 721.21 467.65 C 721.21 470.07 722.27 471.32 724.33 471.32 C 725.32 471.29 726.31 471.09 727.24 470.73 C 727.57 471.71 727.73 472.74 727.72 473.78 C 727.72 479.21 726.48 486.40 726.48 488.08 C 726.48 488.76 726.91 491.71 729.96 491.71 C 732.78 491.71 733.45 488.56 733.46 488.45 C 734.11 484.42 734.49 480.36 734.58 476.28 C 734.58 467.55 732.06 465.37 728.74 464.25 Z"
+                fill="#000000" fill-rule="nonzero" node-id="59" stroke="none" target-height="61.936462" target-width="13.37262" target-x="721.2057" target-y="429.77798" />
+              <path
+                d="M 603.09 434.07 C 603.09 430.80 599.81 430.66 598.90 430.47 C 583.43 431.90 576.35 445.05 576.35 448.86 C 576.35 449.78 576.72 450.65 577.38 451.28 C 578.04 451.91 578.93 452.24 579.84 452.19 C 583.56 452.19 582.66 447.46 588.26 442.30 C 596.73 434.52 603.09 440.05 603.09 434.07 Z"
+                fill="#000000" fill-rule="nonzero" node-id="61" stroke="none" target-height="21.76706" target-width="26.746033" target-x="576.3489" target-y="430.46957" />
+              <path
+                d="M 643.72 491.47 C 643.72 491.50 643.71 491.54 643.71 491.58 C 625.86 492.39 622.60 504.36 622.60 505.28 C 622.66 507.09 624.16 508.52 625.97 508.49 C 630.65 508.49 629.88 498.75 642.90 498.75 C 644.62 498.75 646.73 498.93 647.93 498.93 C 651.49 498.93 651.75 496.16 651.75 495.45 C 651.75 491.64 647.23 491.89 643.72 491.47 Z"
+                fill="#000000" fill-rule="nonzero" node-id="63" stroke="none" target-height="17.049988" target-width="29.152405" target-x="622.60175" target-y="491.46555" />
+              <path
+                d="M 599.31 455.34 C 596.03 455.34 595.45 460.48 595.45 462.35 C 595.47 464.05 595.75 465.74 596.27 467.37 C 596.75 468.69 598.04 469.53 599.45 469.45 C 602.92 469.45 602.77 465.26 603.19 462.18 C 602.36 458.07 602.52 455.34 599.31 455.34 Z"
+                fill="#000000" fill-rule="nonzero" node-id="65" stroke="none" target-height="14.190033" target-width="7.7456055" target-x="595.44745" target-y="455.3441" />
+              <path
+                d="M 622.83 469.03 C 625.99 469.03 626.98 464.52 626.98 461.37 C 626.98 456.71 624.62 455.44 623.09 455.44 C 619.80 455.44 619.51 458.42 619.51 459.48 C 619.51 459.70 619.53 459.84 619.53 459.85 C 619.53 460.54 619.56 461.24 619.56 461.93 L 619.44 461.93 C 619.44 462.71 619.39 463.51 619.39 464.29 C 619.39 468.90 622.16 469.03 622.75 469.03 Z"
+                fill="#000000" fill-rule="nonzero" node-id="67" stroke="none" target-height="13.589539" target-width="7.5849" target-x="619.3903" target-y="455.43924" />
+              <path
+                d="M 833.35 300.54 C 833.76 300.54 836.81 300.46 836.81 296.36 C 836.81 296.26 836.57 281.64 836.57 280.29 C 836.57 279.61 836.65 278.93 836.69 278.18 C 840.01 279.88 841.47 280.63 842.95 280.63 C 844.12 280.63 845.29 280.15 847.40 279.30 C 847.40 279.81 847.40 280.29 847.40 280.75 C 847.40 282.58 847.31 290.61 847.31 294.67 C 847.31 294.77 847.30 294.95 847.30 295.18 C 847.30 296.54 847.54 299.85 850.83 299.85 C 853.95 299.85 854.40 297.49 854.40 292.25 C 854.40 290.13 854.32 287.54 854.32 284.44 C 854.32 280.05 854.41 276.46 854.41 273.58 C 854.41 266.38 853.89 263.55 850.25 263.55 C 846.40 263.55 846.62 267.80 842.72 273.43 C 838.71 271.24 838.46 264.40 833.89 264.40 C 832.02 264.40 831.22 265.68 830.37 266.09 C 828.89 266.77 827.99 268.31 828.14 269.94 C 828.14 273.59 829.28 295.76 830.24 298.39 C 830.73 299.69 831.97 300.55 833.35 300.54 Z"
+                fill="#000000" fill-rule="nonzero" node-id="69" stroke="none" target-height="36.994446" target-width="26.41394" target-x="827.99243" target-y="263.5507" />
+              <path
+                d="M 803.99 287.11 C 803.99 290.31 804.25 304.67 817.07 304.67 C 819.49 304.67 828.57 303.98 828.57 299.30 C 828.57 298.89 828.29 296.03 825.38 296.03 C 823.88 296.03 820.96 297.65 817.13 297.65 C 814.11 297.65 813.27 296.73 812.84 295.82 C 811.79 293.57 811.23 291.12 811.18 288.64 C 815.38 288.08 821.84 287.68 821.84 283.53 C 821.84 282.71 821.51 281.92 820.92 281.35 C 820.34 280.77 819.55 280.45 818.73 280.45 C 817.39 280.45 819.30 280.47 811.09 282.15 L 811.09 271.95 C 811.60 271.95 811.99 271.94 812.34 271.94 C 813.74 271.94 815.64 272.24 817.40 272.24 C 818.75 272.24 823.49 271.84 823.49 268.69 C 823.49 265.38 821.59 265.17 812.17 265.17 C 810.76 265.17 809.18 265.17 807.42 265.17 C 803.20 265.17 803.11 267.93 803.11 268.24 L 803.11 268.27 C 803.11 270.25 804.70 269.96 804.70 272.80 C 804.70 274.17 803.99 283.14 803.99 287.11 Z"
+                fill="#000000" fill-rule="nonzero" node-id="71" stroke="none" target-height="39.505035" target-width="25.45996" target-x="803.11395" target-y="265.16733" />
+              <path
+                d="M 859.70 270.85 C 859.70 271.47 859.70 272.02 859.70 272.56 C 859.70 273.99 859.60 278.07 859.60 283.27 C 859.60 301.32 859.90 304.30 863.68 304.30 C 864.65 304.30 867.15 303.86 867.15 299.88 C 867.15 298.16 866.51 287.20 866.51 287.10 C 866.51 283.92 877.16 280.77 877.16 272.00 C 877.16 266.97 872.17 262.02 865.85 262.02 C 862.53 262.02 857.53 263.77 857.53 267.08 C 857.67 268.59 858.46 269.97 859.70 270.85 Z M 866.14 268.76 C 868.36 268.76 870.11 270.59 870.11 271.97 C 870.11 273.30 869.00 275.17 866.38 277.04 C 866.25 274.07 866.13 271.49 866.01 268.76 C 866.05 268.76 866.10 268.76 866.14 268.76 Z"
+                fill="#000000" fill-rule="nonzero" node-id="73" stroke="none" target-height="42.27545" target-width="19.625977" target-x="857.5324" target-y="262.0243" />
+              <path
+                d="M 906.43 273.63 C 908.76 274.74 909.75 276.20 909.75 278.34 C 909.75 279.06 909.66 279.36 909.66 279.69 C 909.66 283.89 909.60 287.26 909.60 289.93 C 909.60 296.96 910.04 299.18 913.21 299.18 C 914.23 299.17 915.21 298.74 915.92 297.99 C 916.63 297.24 917.01 296.24 916.97 295.21 C 916.97 281.11 916.31 278.90 916.31 277.04 C 916.31 270.14 924.56 266.48 924.56 262.81 C 924.50 261.18 923.19 259.87 921.56 259.81 C 919.71 259.81 919.29 260.63 911.40 268.90 C 908.88 267.61 906.59 266.51 905.01 264.16 C 904.52 263.40 903.67 262.93 902.76 262.93 C 901.37 263.05 900.18 263.98 899.73 265.30 C 899.28 266.62 899.66 268.08 900.69 269.02 C 902.50 270.70 904.27 272.61 906.43 273.63 Z"
+                fill="#000000" fill-rule="nonzero" node-id="75" stroke="none" target-height="39.37744" target-width="25.278198" target-x="899.28253" target-y="259.80588" />
+              <path
+                d="M 880.67 269.52 C 882.66 269.52 882.83 268.18 884.68 268.18 C 885.10 268.19 885.51 268.24 885.91 268.35 C 885.91 268.86 885.91 269.37 885.91 269.88 C 885.91 276.34 885.84 281.46 885.84 285.50 C 885.84 296.47 886.37 299.45 890.34 299.45 C 893.79 299.45 894.73 295.68 894.73 295.01 C 894.73 292.84 893.02 293.25 892.96 290.67 C 892.83 285.06 892.48 271.18 892.48 270.76 C 892.48 270.22 892.57 269.68 892.61 269.16 C 893.94 269.05 898.40 269.46 898.40 265.63 C 898.40 263.01 895.84 262.21 894.68 262.13 C 891.62 261.94 888.55 261.62 885.48 261.62 C 883.53 261.62 877.06 261.80 877.06 265.89 C 877.09 267.87 878.69 269.48 880.67 269.52 Z"
+                fill="#000000" fill-rule="nonzero" node-id="77" stroke="none" target-height="37.827454" target-width="21.341797" target-x="877.06213" target-y="261.62155" />
             </svg>
-            <p class="text-gray-600 text-sm dark:text-gray-400">未查询到结果,换个姿势搜索吧~~</p>
+            <p class="text-gray-600 text-sm dark:text-gray-400">未查询到结果, 换个姿势搜索吧~</p>
           </div>
-
         </div>
-
         <!-- Modal footer -->
-        <div class="flex items-center p-4 md:p-5 border-t text-xs flex items-center text-gray-400 dark:border-gray-600">
+        <div class="p-4 md:p-5 border-t text-xs flex items-center text-gray-400 dark:border-gray-600">
           <!-- Esc 退出提示 -->
-          <span class="px-2 py-[1px] flex-none border rounded ">Esc</span>
+          <span class="px-2 py-[1px] flex-none border rounded dark:border-gray-600">Esc</span>
           <span class="text-gray-400 ml-2">关闭</span>
 
           <!-- 底层技术介绍 -->
-          <span class="ml-auto  ">
-            基于
-            <a href="https://lucene.apache.org/" target="_blank" class="underline ">Apache Lucene</a>
-            全文检索引擎开发
-          </span>
+          <span class="ml-auto">基于&nbsp;<a href="https://lucene.apache.org/" target="_blank" class="underline">Apache Lucene</a>&nbsp;全文检索引擎开发</span>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- 知识库目录 drawer component -->
+  <div id="wiki-catalog-drawer" class="block lg:hidden top-[4.3rem] fixed left-0 z-20 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-[#0d1117]" tabindex="-1"
+    aria-labelledby="drawer-label">
+    <!-- 知识库目录 -->
+    <div class="grow transition-all duration-300">
+      <div id="drawer-accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-[#0d1117] dark:text-gray-300" data-inactive-classes="" class="last:pb-[170px]">
+        <div v-for="(catalog, index) in props.catalogs" :key="index">
+          <h2 :id="'drawer-accordion-flush-heading-' + catalog.id">
+            <button type="button" class="hover:bg-gray-100 flex items-center justify-between w-full py-3 px-3 rounded-lg 
+                          font-medium rtl:text-right text-gray-600 dark:text-gray-400 gap-3 dark:hover:bg-gray-800" :data-accordion-target="'#drawer-accordion-flush-body-' + catalog.id"
+              :aria-expanded="[catalog.children.some(item => item.articleId == route.query.articleId) ? true : false]" :aria-controls="'drawer-accordion-flush-body-' + catalog.id">
+              <!-- 一级目录标题 -->
+              <span class="flex items-center" v-html="catalog.title"></span>
+              <!-- 箭头 -->
+              <svg data-accordion-icon class="w-3 h-3 rotate-90 transition-all shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+              </svg>
+            </button>
+          </h2>
+          <!-- 二级目录 -->
+          <ul :id="'drawer-accordion-flush-body-' + catalog.id" class="hidden" :aria-labelledby="'drawer-accordion-flush-heading-' + catalog.id">
+            <!-- 二级目录标题 -->
+            <li v-for="(childCatalog, index2) in catalog.children" :key="index2" class="flex items-center ps-10 py-2 pe-3 rounded-lg cursor-pointer 
+                                  dark:text-gray-400"
+              :class="[childCatalog.articleId == route.query.articleId ? 'bg-sky-50 text-sky-600 dark:bg-sky-950 dark:text-sky-500' : 'hover:bg-gray-100 dark:hover:bg-gray-800']"
+              @click="goWikiArticleDetailPage(childCatalog.articleId)" v-html="childCatalog.title">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </template>
-  
-  <script setup>
+
+<script setup>
 import { onMounted, ref, onBeforeUnmount, watch } from 'vue'
-import { initCollapses, initDropdowns, initModals, Modal } from 'flowbite'
+import {
+  initCollapses,
+  initDropdowns,
+  initModals,
+  initAccordions,
+  Modal,
+  Drawer,
+} from 'flowbite'
 import { useBlogSettingsStore } from '@/stores/blogsettings'
 import { useUserStore } from '@/stores/user'
 import { useRouter, useRoute } from 'vue-router'
@@ -420,33 +423,18 @@ import { showMessage } from '@/composales/utils'
 import { getArticleSearchPageList } from '@/api/frontend/search'
 import { useDark, useToggle } from '@vueuse/core'
 
-const router = useRouter()
-const route = useRoute()
-// 初始化 flowbit 相关组件
-const searchModal = ref(null)
-const searchInputRef = ref(null)
+// 对外暴露属性，将目录数据传进来
+const props = defineProps({
+  catalogs: {
+    type: Array,
+    default: [],
+  },
+})
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
-
-// 文章搜索结果
-const searchArticles = ref([])
-// 当前页码，给了一个默认值 1
-const current = ref(1)
-// 总数据量，给了个默认值 0
-const total = ref(0)
-// 每页显示的数据量，给了个默认值 10
-const size = ref(10)
-// 总共多少页
-const pages = ref(0)
-// 搜索关键词
-const searchWord = ref('')
-
-// 搜索弹框
 const modalOptions = {
-  placement: 'top-right', // 弹框位置
+  placement: 'top-center', // 弹框位置
   backdrop: 'dynamic',
-  backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-10',
+  backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
   closable: true,
   onHide: () => {
     console.log('modal is hidden')
@@ -459,30 +447,62 @@ const modalOptions = {
   },
 }
 
-// 点击搜索框
-const clickSearchBtn = () => {
-  // 显示搜索弹框
-  searchModal.value.show()
-
-  // 激活搜索框
-  searchInputRef.value.focus()
-}
-
 // instance options object
 const instanceOptions = {
   id: 'searchModalEl',
   override: true,
 }
 
+// options with default values
+const drawerOptions = {
+  placement: 'left',
+  backdrop: true,
+  bodyScrolling: false,
+  edge: false,
+  edgeOffset: '',
+  backdropClasses:
+    'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-[19] block lg:hidden',
+  onHide: () => {
+    console.log('drawer is hidden')
+    isDrawerExpand.value = false
+  },
+  onShow: () => {
+    console.log('drawer is shown')
+  },
+  onToggle: () => {
+    console.log('drawer has been toggled')
+  },
+}
+
+// instance options object
+const instanceOptionsDrawer = {
+  id: 'wiki-catalog-drawer',
+  override: true,
+}
+
+// 知识库目录 Drawer 引用
+const wikiDrawer = ref(null)
+// 初始化 flowbit 相关组件
+const searchModal = ref(null)
+
 // 初始化 flowbit 相关组件
 onMounted(() => {
   initCollapses()
   initDropdowns()
   initModals()
+  initAccordions()
 
   // 初始化
   const $modalElement = document.querySelector('#search-modal')
   searchModal.value = new Modal($modalElement, modalOptions, instanceOptions)
+
+  // 初始化知识库目录 Drawer
+  const $drawerElement = document.getElementById('wiki-catalog-drawer')
+  wikiDrawer.value = new Drawer(
+    $drawerElement,
+    drawerOptions,
+    instanceOptionsDrawer
+  )
 
   // 注册键盘事件监听器
   window.addEventListener('keydown', handleKeyDown)
@@ -493,21 +513,25 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleKeyDown)
 })
 
+// 搜索输入框引用
+const searchInputRef = ref(null)
 // 键盘监听
 const handleKeyDown = (event) => {
-  // 检查是否按了 Ctrl + k
+  // 检查是否按下了 Ctrl 键和 K 键
   if (event.ctrlKey && event.key === 'k') {
     // 阻止激活浏览器本身的搜索框
     event.preventDefault()
     console.log('ctrl k 被按了')
 
-    // 显示搜索弹框
     searchModal.value.show()
 
     // 激活搜索框
     searchInputRef.value.focus()
   }
 }
+
+const router = useRouter()
+const route = useRoute()
 
 // 当前路由地址
 const currPath = ref(route.path)
@@ -530,8 +554,31 @@ const logout = () => {
   showMessage('退出登录成功')
 }
 
-// 侦听属性，监听 searchWord 变量变化
+// 点击搜索框
+const clickSearchBtn = () => {
+  searchModal.value.show()
+  // 激活搜索框
+  searchInputRef.value.focus()
+}
+
+// 文章搜索结果
+const searchArticles = ref([])
+// 当前页码，给了一个默认值 1
+const current = ref(1)
+// 总数据量，给了个默认值 0
+const total = ref(0)
+// 每页显示的数据量，给了个默认值 10
+const size = ref(1)
+// 总共多少页
+const pages = ref(0)
+// 搜索关键词
+const searchWord = ref('')
+
+// 搜索 Loading
+const searchLoading = ref(false)
+
 watch(searchWord, (newText, oldText) => {
+  console.log(`新值: ${newText}, 老值: ${oldText}`)
   if (newText && newText !== oldText) {
     // 若搜索关键词不为空，且和之前的值不相同
     renderSearchArticles({
@@ -546,14 +593,13 @@ watch(searchWord, (newText, oldText) => {
   }
 })
 
-// 搜索 Loading
-const searchLoading = ref(false)
-// 请求后台接口
+// 请求后台检索接口
 function renderSearchArticles(data) {
   // 显示加载 Loading
   searchLoading.value = true
   getArticleSearchPageList(data)
     .then((res) => {
+      console.log(res)
       if (res.success) {
         searchArticles.value = res.data
         current.value = res.current
@@ -562,7 +608,7 @@ function renderSearchArticles(data) {
         pages.value = res.pages
       }
     })
-    .finally(() => (searchLoading.value = false)) // 隐藏loading
+    .finally(() => (searchLoading.value = false)) // 隐藏加载 Loading
 }
 
 // 渲染下一页搜索结果
@@ -590,9 +636,31 @@ const jumpToArticleDetailPage = (articleId) => {
   // 路由跳转
   router.push('/article/' + articleId)
 }
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+
+// 知识库目录抽屉是否展开，默认未展开
+const isDrawerExpand = ref(false)
+// 侦听 isDrawerExpand 变量
+watch(isDrawerExpand, (newText, oldText) => {
+  if (newText) {
+    // 展示抽屉
+    wikiDrawer.value.show()
+  } else {
+    // 隐藏抽屉
+    wikiDrawer.value.hide()
+  }
+})
+
+// 跳转文章详情页
+const goWikiArticleDetailPage = (articleId) => {
+  isDrawerExpand.value = false
+  router.push({ path: '/wiki/' + route.params.wikiId, query: { articleId } })
+}
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .vt-switch {
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider: var(--vt-c-divider-light-1);
@@ -668,6 +736,66 @@ const jumpToArticleDetailPage = (articleId) => {
 .vt-switch-appearance-sun {
   opacity: 1;
 }
+
+#checkbox {
+  display: none;
+}
+
+.toggle {
+  position: relative;
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition-duration: 0.5s;
+  border: none;
+}
+
+.bars {
+  width: 100%;
+  height: 2.5px;
+  background-color: rgb(107 114 128 / 1);
+  border-radius: 2.5px;
+}
+
+#bar2 {
+  transition-duration: 0.8s;
+}
+
+#bar1,
+#bar3 {
+  width: 70%;
+}
+
+#checkbox:checked + .toggle .bars {
+  position: absolute;
+  transition-duration: 0.5s;
+}
+
+#checkbox:checked + .toggle #bar2 {
+  transform: scaleX(0);
+  transition-duration: 0.5s;
+}
+
+#checkbox:checked + .toggle #bar1 {
+  width: 100%;
+  transform: rotate(45deg);
+  transition-duration: 0.5s;
+}
+
+#checkbox:checked + .toggle #bar3 {
+  width: 100%;
+  transform: rotate(-45deg);
+  transition-duration: 0.5s;
+}
+
+#checkbox:checked + .toggle {
+  transition-duration: 0.5s;
+  transform: rotate(180deg);
+}
 </style>
-  
-  
+

@@ -1,10 +1,11 @@
 <template>
   <header class="sticky top-0 z-10">
     <nav class="bg-white border-gray-200 border-b dark:border-gray-800 dark:bg-gray-900">
-      <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4 shadow-md">
         <!-- 博客 LOGO 、博客名称 -->
         <a href="/" class="flex items-center">
           <!-- <img src="../../../assets/logo.png" class="h-8 mr-3  " alt="Flowbite Logo" /> -->
+          <img :src="blogSettingsStore.blogSettings.logo" class="h-8 mr-3 rounded-full" alt="Weblog Logo" />
           <span class="self-center text-2xl font-semibold whitespace-nowrap  dark:text-gray-400">{{ blogSettingsStore.blogSettings.name }}</span>
         </a>
 
@@ -40,7 +41,7 @@
                     d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z">
                   </path>
                 </svg><!--]--></span></span></button>
-          <!-- 搜索框 -->
+          <!-- 移动端搜索框 -->
           <button type="button" @click="clickSearchBtn"
             class="mr-2 hidden outline-none lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
             <svg class="w-4 h-4 mr-2 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -59,7 +60,7 @@
             class="text-white ml-2 mr-2 md:mr-0 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button">
             <!-- 用户登录头像 -->
-            <img class="w-12 h-12 rounded-full" :src="blogSettingsStore.blogSettings.avatar" alt="user photo" />
+            <img class="w-8 h-8 rounded-full" :src="blogSettingsStore.blogSettings.avatar" alt="user photo" />
           </button>
 
           <!-- Dropdown menu -->
