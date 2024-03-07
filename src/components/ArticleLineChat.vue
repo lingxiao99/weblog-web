@@ -41,7 +41,8 @@ function init() {
       },
     ],
   }
-
+  // 移动到折点上，显示数值
+  option.tooltip = { trigger: 'axis' }
   option && myChart.setOption(option)
 }
 // 侦听属性, 监听 props.value 的变化，一旦 props.value 发生变化，就调用 initLineChat 初始化折线图
