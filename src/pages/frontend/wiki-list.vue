@@ -11,7 +11,7 @@
         <div class="grid grid-cols-12 gap-7">
           <div v-for="(wiki, index) in wikis" :key="index" class="col-span-12 md:col-span-6 lg:col-span-4 animate__animated animate__fadeInUp ">
             <div v-if="wikis && wikis.length>0">
-              <div class="relative bg-white h-full border border-gray-200 rounded-lg hover:scale-[1.03] dark:bg-gray-800 dark:border-gray-700 shadow-md">
+              <div class="relative bg-white h-full border border-gray-200 rounded-lg hover:scale-[1.03] dark:bg-gray-800 dark:border-gray-700 ">
                 <!-- 知识库封面 -->
                 <a class="cursor-pointer" @click="goWikiArticleDetailPage(wiki.id, wiki.firstArticleId)">
                   <img class="rounded-t-lg h-36 w-full" :src="wiki.cover" />

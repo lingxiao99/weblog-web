@@ -1,6 +1,6 @@
 <template>
   <!-- text-sm/[30px] 表示文字小号，行高为 30px -->
-  <div v-if="titles && titles.length > 0" class="sticky top-[5.5rem] text-sm/[30px] w-full p-5 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md ">
+  <div v-if="titles && titles.length > 0" class="sticky top-[5.5rem] text-sm/[30px] w-full p-5 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700  ">
     <!-- 目录标题 -->
     <h2 class="flex items-center mb-2 font-bold text-gray-900 uppercase dark:text-white">
       <!-- 目录图标 -->

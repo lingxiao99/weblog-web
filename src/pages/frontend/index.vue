@@ -2,7 +2,7 @@
 
   <Header></Header>
 
-  <div style=" width: 1249px; " class="mx-auto  mt-3  -mb-2 bg-white    border border-gray-200 rounded-lg shadow-md bg-cover dark:bg-gray-800 dark:border-gray-700  ">
+  <div style=" width: 1249px; " class="mx-auto  mt-3  -mb-2 bg-white    border border-gray-200 rounded-lg  bg-cover dark:bg-gray-800 dark:border-gray-700  ">
     <div class="flex items-center  ">
       <svg t="1705651083165" class="icon w-6 h-6 m-2  text-green-500 dark:text-green-400 " viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4934" width="200"
         height="200">
@@ -26,7 +26,7 @@
         <!-- 文章列表，grid 表格布局，分为 2 列 -->
         <div class="grid grid-cols-1 gap-4  ">
           <div v-for="(article, index) in articles" :key="index" class="col-span-2 md:col-span-1 hover:scale-[1.03] animate__animated animate__slideInLeft ">
-            <div class="   relative hover:scale-[1.03] bg-white h-full border border-gray-200 rounded-lg  shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div class="   relative hover:scale-[1.03] bg-white h-full border border-gray-200 rounded-lg   dark:bg-gray-800 dark:border-gray-700">
               <!-- 文章封面 -->
               <a @click="goArticleDetailPage(article.id)" class=" flex">
                 <!-- <img class="rounded-t-lg h-48 w-full" :src="article.cover"> -->

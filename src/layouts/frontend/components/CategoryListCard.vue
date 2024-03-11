@@ -1,5 +1,5 @@
 <template>
-  <div v-if="categories.length > 1" class="w-full p-5 mb-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md">
+  <div v-if="categories.length > 1" class="w-full p-5 mb-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
 
     <!-- 分类标题 -->
     <div class="flex mb-3">

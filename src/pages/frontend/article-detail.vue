@@ -177,6 +177,9 @@
 
           </article>
         </div>
+
+        <!-- 评论组件 -->
+        <Comment></Comment>
       </div>
 
       <!-- 右边侧边栏，占用一列 -->
@@ -222,6 +225,8 @@ import 'highlight.js/styles/tokyo-night-dark.css'
 
 import { MdPreview } from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
+
+import Comment from '@/components/Comment.vue'
 
 const route = useRoute()
 const router = useRouter()

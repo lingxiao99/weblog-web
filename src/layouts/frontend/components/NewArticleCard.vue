@@ -1,6 +1,6 @@
 <template>
 
-  <div class="w-full py-5 px-2 mb-2 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md">
+  <div class="w-full py-5 px-2 mb-2 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
 
     <h2 class=" flex  items-center mb-2 font-bold text-gray-900 uppercase dark:text-white">
 

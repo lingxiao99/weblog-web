@@ -1,6 +1,6 @@
 <template>
   <!-- 博主信息 -->
-  <div class="w-full py-5 px-2 mb-2 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md">
+  <div class="w-full py-5 px-2 mb-2 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
     <div class="flex flex-col items-center">
       <!-- 博主头像 -->
       <div class="relative mb-4">

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="tags.length > 1" class="w-full p-5 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 shadow-md">
+  <div v-if="tags.length > 1" class="w-full p-5 mb-3 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
     <!-- 标签标题 -->
     <div class="flex mb-3">
       <h2 class=" flex  items-center mb-2 font-bold text-gray-900 uppercase dark:text-white">
