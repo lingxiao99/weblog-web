@@ -8,7 +8,8 @@
         <div class="flex gap-3">
           <!-- 头像 -->
           <div>
-            <svg class="w-10 h-10 text-gray-400 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <img v-if="commentStore.userInfo.avatar && commentStore.userInfo.avatar.length > 0" :src="commentStore.userInfo.avatar" class="w-10 h-10 rounded-full">
+            <svg v-else class="w-10 h-10 text-gray-400 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
               <path
                 d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
             </svg>
@@ -21,9 +22,11 @@
                   class="inline-flex border-e-0 items-center px-3 text-xs text-gray-900 bg-gray-100 border rounded-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                   昵称
                 </span>
-                <input data-tooltip-target="nickname-tooltip-click" data-tooltip-trigger="click" type="text" id="website-admin"
+                <!-- 昵称输入框 -->
+                <input @blur="onNicknameInputBlur" v-model="commentStore.userInfo.nickname" data-tooltip-target="nickname-tooltip-click" data-tooltip-trigger="click" type="text" id="website-admin"
                   class="rounded-none rounded-e-lg  border text-gray-900 focus:ring-sky-500 
-focus:border-sky-500 block flex-1 min-w-0 w-full text-xs border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="必填">
+focus:border-sky-500 block flex-1 min-w-0 w-full text-xs border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
+                  placeholder="必填">
                 <!-- 昵称 Tooltip -->
                 <div id="nickname-tooltip-click" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 
 text-xs font-medium text-white bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
@@ -36,7 +39,7 @@ text-xs font-medium text-white bg-gray-900 rounded-md shadow-sm opacity-0 toolti
                   class="inline-flex border-e-0 items-center px-3 text-xs text-gray-900 bg-gray-100 border rounded-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                   邮箱
                 </span>
-                <input data-tooltip-target="mail-tooltip-click" data-tooltip-trigger="click" type="text" id="website-admin" class="rounded-none rounded-e-lg  border text-gray-900 focus:ring-sky-500 
+                <input v-model="commentStore.userInfo.mail" data-tooltip-target="mail-tooltip-click" data-tooltip-trigger="click" type="text" id="website-admin" class="rounded-none rounded-e-lg  border text-gray-900 focus:ring-sky-500 
 focus:border-sky-500 block flex-1 min-w-0 w-full text-xs border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 
 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="必填">
                 <!-- 邮箱 Tooltip -->
@@ -51,7 +54,7 @@ text-xs font-medium text-white bg-gray-900 rounded-md shadow-sm opacity-0 toolti
                   class="inline-flex border-e-0 items-center px-3 text-xs text-gray-900 bg-gray-100 border rounded-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                   网址
                 </span>
-                <input data-tooltip-target="website-tooltip-click" data-tooltip-trigger="click" type="text" id="website-admin" class="rounded-none rounded-e-lg  border text-gray-900 
+                <input v-model="commentStore.userInfo.website" data-tooltip-target="website-tooltip-click" data-tooltip-trigger="click" type="text" id="website-admin" class="rounded-none rounded-e-lg  border text-gray-900 
 focus:ring-sky-500 focus:border-sky-500 block flex-1 min-w-0 w-full text-xs border-gray-300 p-2.5  dark:bg-gray-700
 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="选填">
                 <!-- 网址 Tooltip -->
@@ -106,6 +109,9 @@ bg-sky-600 rounded-lg focus:ring-4 focus:ring-sky-200 dark:focus:ring-sky-900 ho
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
 import { initTooltips, initPopovers } from 'flowbite'
+import { useCommentStore } from '@/stores/comment'
+
+import { getUserInfoByQQ } from '@/api/frontend/comment'
 
 onMounted(() => {
   initTooltips(), initPopovers()
@@ -118,6 +124,8 @@ const total = ref(0)
 const commentForm = reactive({
   content: '',
 })
+
+const commentStore = useCommentStore()
 
 // emojis 表情符号
 const emojis = ref([
@@ -157,5 +165,31 @@ const emojis = ref([
 // 添加 Emoji 表情
 const addEmoji = (emoji) => {
   commentForm.content = commentForm.content + emoji
+}
+
+// 昵称输入框 blUr 事件
+const onNicknameInputBlur = () => {
+  let nickname = commentStore.userInfo.nickname
+
+  // 校验昵称是否是纯数字
+  if (!checkIfPureNumber(nickname)) return
+
+  // 若是，请求后端接口，根据 QQ 号获取用户信息
+  getUserInfoByQQ(nickname).then((res) => {
+    if (!res.success) {
+      // 提示错误消息
+      showMessage('获取 QQ 信息失败 ', 'error')
+      return
+    }
+    commentStore.userInfo.avatar = res.data.avatar
+    commentStore.userInfo.nickname = res.data.nickname
+    commentStore.userInfo.mail = res.data.mail
+  })
+}
+
+// QQ 号校验，是否是纯数字
+function checkIfPureNumber(text) {
+  const trimmedValue = text.trim()
+  return /^\d+$/.test(trimmedValue)
 }
 </script>
