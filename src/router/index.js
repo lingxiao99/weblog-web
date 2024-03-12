@@ -42,13 +42,13 @@ const routes = [
       title: 'Weblog 归档页'
     }
   },
-  {
-    path: '/about/me', // 关于我
-    component: AboutMe,
-    meta: {
-      title: 'Weblog 关于我'
-    }
-  },
+  // {
+  //   path: '/about/me', // 关于我
+  //   component: AboutMe,
+  //   meta: {
+  //     title: 'Weblog 关于我'
+  //   }
+  // },
   {
     path: '/wiki/list', // 知识库
     component: WikiList,

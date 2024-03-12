@@ -2,7 +2,7 @@
 
   <Header></Header>
 
-  <div style=" width: 1249px; " class="mx-auto  mt-3  -mb-2 bg-white    border border-gray-200 rounded-lg  bg-cover dark:bg-gray-800 dark:border-gray-700  ">
+  <!-- <div style=" width: 1249px; " class="mx-auto  mt-3  -mb-2 bg-white    border border-gray-200 rounded-lg  bg-cover dark:bg-gray-800 dark:border-gray-700  ">
     <div class="flex items-center  ">
       <svg t="1705651083165" class="icon w-6 h-6 m-2  text-green-500 dark:text-green-400 " viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4934" width="200"
         height="200">
@@ -15,7 +15,7 @@
       </svg>
       <p class=" marquee-text flex justify-center hover:border-gray-900 w-full font-normal text-gray-700 dark:text-gray-400">{{everyDayName}} -- {{everyDayFrom}}</p>
     </div>
-  </div>
+  </div> -->
 
   <!-- 主内容区域 -->
   <main class="container max-w-screen-xl mx-auto p-4  admin-container    ">

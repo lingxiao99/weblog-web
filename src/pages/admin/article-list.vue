@@ -96,7 +96,7 @@
       <!-- 分页列表 -->
       <el-table :data="tableData" border stripe style="width: 100%" v-loading="tableLoading">
         <el-table-column prop="id" label="ID" width="50" />
-        <el-table-column prop="title" label="标题" width="300" align="center" />
+        <el-table-column prop="title" label="标题" width="250" align="center" />
         <el-table-column prop="cover" label="封面" width="180" align="center">
           <template #default="scope">
             <el-image style="width: 100px" :src="scope.row.cover" />

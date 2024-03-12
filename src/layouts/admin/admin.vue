@@ -3,7 +3,7 @@
   <el-container>
 
     <!-- 左边侧边栏 -->
-    <el-aside :width='menuStore.menuWidth' class="transition-all">
+    <el-aside :width='menuStore.menuWidth' class="transition-all duration-300">
       <AdminMenu></AdminMenu>
     </el-aside>
 
