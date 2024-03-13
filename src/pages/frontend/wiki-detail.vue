@@ -186,6 +186,9 @@
               </div>
             </nav>
           </article>
+
+          <!-- 评论组件 -->
+          <Comment customeCss=""></Comment>
         </div>
       </div>
       <!-- 右边栏 -->
@@ -215,6 +218,8 @@ import hljs from 'highlight.js/lib/common'
 import 'highlight.js/styles/tokyo-night-dark.css'
 import ScrollToTopButton from '@/layouts/frontend/components/ScrollToTopButton.vue'
 import { initAccordions } from 'flowbite'
+
+import Comment from '@/components/Comment.vue'
 
 onMounted(() => {
   nextTick(() => initAccordions())
