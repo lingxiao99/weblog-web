@@ -85,6 +85,7 @@ getTagList().then((res) => {
 
 // 跳转标签文章列表页
 const goTagArticleListPage = (id, name) => {
+  console.log(id, name)
   // 跳转时通过 query 携带参数（标签 ID、标签名称）
   router.push({ path: '/tag/article/list', query: { id, name } })
 }

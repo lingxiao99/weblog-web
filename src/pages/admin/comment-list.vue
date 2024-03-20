@@ -55,7 +55,7 @@
           <template #default="scope">
 
             <el-tooltip class="box-item" effect="dark" content="详情" placement="bottom">
-              <el-button size="small" :icon="Tickets" circle>
+              <el-button size="small" :icon="Tickets" circle @click="showDetailDialog(scope.row)">
               </el-button>
             </el-tooltip>
 
@@ -65,7 +65,7 @@
             </el-tooltip>
 
             <el-tooltip class="box-item" effect="dark" content="删除" placement="bottom">
-              <el-button type="danger" size="small" :icon="Delete" circle>
+              <el-button type="danger" size="small" :icon="Delete" circle @click="deleteCommentSubmit(scope.row)">
               </el-button>
             </el-tooltip>
 
@@ -81,11 +81,52 @@
 
     </el-card>
   </div>
+
+  <!-- 查看评论详情 -->
+  <el-dialog v-model="detailDialogVisible" title="评论详情" width="700">
+    <el-form :model="commentDetail" label-width="auto">
+      <el-form-item label="路由">
+        <el-input v-model="commentDetail.routerUrl" disabled />
+      </el-form-item>
+      <el-form-item label="头像">
+        <el-avatar :size="40" :src="commentDetail.avatar" />
+      </el-form-item>
+      <el-form-item label="昵称">
+        <el-input v-model="commentDetail.nickname" disabled />
+      </el-form-item>
+
+      <el-form-item label="评论内容">
+        <el-input type="textarea" v-model="commentDetail.content" disabled />
+      </el-form-item>
+      <el-form-item label="网站">
+        <el-input v-model="commentDetail.website" disabled />
+      </el-form-item>
+      <el-form-item label="邮箱">
+        <el-input v-model="commentDetail.mail" disabled />
+      </el-form-item>
+      <el-form-item label="发布时间">
+        <el-input v-model="commentDetail.createTime" disabled />
+      </el-form-item>
+      <el-form-item label="状态">
+        <el-tag type="warning" v-if="commentDetail.status == 1">待审核</el-tag>
+        <el-tag type="success" v-else-if="commentDetail.status == 2">正常</el-tag>
+        <el-tag type="danger" v-else-if="commentDetail.status == 3">审核不通过</el-tag>
+      </el-form-item>
+      <el-form-item label="原因">
+        <el-input type="textarea" v-model="commentDetail.reason" disabled />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="detailDialogVisible = false">退出</el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { getCommentPageList } from '@/api/admin/comment'
+import { getCommentPageList, deleteComment } from '@/api/admin/comment'
 import {
   Search,
   RefreshRight,
@@ -94,6 +135,7 @@ import {
   Tickets,
 } from '@element-plus/icons-vue'
 import moment from 'moment'
+import { showMessage, showModel } from '@/composales/utils'
 
 // 模糊搜索的路由
 const searchRouterUrl = ref('')
@@ -112,6 +154,16 @@ const datepickerChange = (e) => {
   console.log('开始时间：' + startDate.value + ', 结束时间：' + endDate.value)
 }
 
+// 评论详情对话框是否展示
+const detailDialogVisible = ref(false)
+// 评论数据
+const commentDetail = ref({})
+
+// 展示评论详情对话框
+const showDetailDialog = (row) => {
+  detailDialogVisible.value = true
+  commentDetail.value = row
+}
 const shortcuts = [
   {
     text: '最近一周',
@@ -167,6 +219,29 @@ const reset = () => {
   endDate.value = null
   searchRouterUrl.value = ''
   status.value = null
+}
+
+const deleteCommentSubmit = (row) => {
+  showModel('是否确定要该评论，以及其子评论？')
+    .then(() => {
+      deleteComment(row.id).then((res) => {
+        if (!res.success) {
+          // 获取服务端返回的错误消息
+          let message = res.message
+
+          // 提示错误信息
+          showMessage(message, 'error')
+          return
+        }
+
+        showMessage('删除成功')
+        // 重新请求分页接口，渲染数据
+        getTableData()
+      })
+    })
+    .catch((e) => {
+      console.log('取消了')
+    })
 }
 
 // 表格加载 Loading

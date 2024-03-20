@@ -87,7 +87,7 @@
       </div>
     </el-card>
 
-    <!-- 添加分类 -->
+    <!-- 添加标签 -->
     <FormDialog ref="formDialogRef" title="添加文章标签" destroyOnClose @submit="onSubmit">
       <el-form ref="formRef" :model="form">
         <el-form-item prop="name">
