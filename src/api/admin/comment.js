@@ -10,3 +10,8 @@ export function getCommentPageList (data) {
 export function deleteComment (id) {
     return axios.post("/admin/comment/delete", { id })
 }
+
+// 审核评论
+export function examineComment (data) {
+    return axios.post("/admin/comment/examine", data)
+}

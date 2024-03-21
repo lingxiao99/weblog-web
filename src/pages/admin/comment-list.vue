@@ -60,7 +60,7 @@
             </el-tooltip>
 
             <el-tooltip v-if="scope.row.status == 1" class="box-item" effect="dark" content="审核" placement="bottom">
-              <el-button size="small" :icon="Edit" circle>
+              <el-button size="small" :icon="Edit" circle @click="showEditDetailDialog(scope.row)">
               </el-button>
             </el-tooltip>
 
@@ -122,11 +122,30 @@
       </div>
     </template>
   </el-dialog>
+
+  <!-- 评论审核 -->
+  <FormDialog ref="editDialogRef" title="审核评论" destroyOnClose @submit="onSubmit">
+    <el-form ref="formRef" :rules="rules" :model="form" label-width="auto">
+      <el-form-item label="状态" prop="status">
+        <el-radio-group v-model="form.status">
+          <el-radio label="2">通过</el-radio>
+          <el-radio label="3">不通过</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="原因" prop="reason" v-if="form.status == 3">
+        <el-input type="textarea" placeholder="请填写审核不通过的原因" v-model="form.reason" :rows="6" />
+      </el-form-item>
+    </el-form>
+  </FormDialog>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { getCommentPageList, deleteComment } from '@/api/admin/comment'
+import {
+  getCommentPageList,
+  deleteComment,
+  examineComment,
+} from '@/api/admin/comment'
 import {
   Search,
   RefreshRight,
@@ -136,6 +155,7 @@ import {
 } from '@element-plus/icons-vue'
 import moment from 'moment'
 import { showMessage, showModel } from '@/composales/utils'
+import FormDialog from '@/components/FormDialog.vue'
 
 // 模糊搜索的路由
 const searchRouterUrl = ref('')
@@ -279,4 +299,74 @@ function getTableData() {
     .finally(() => (tableLoading.value = false)) // 隐藏表格 loading
 }
 getTableData()
+
+const formRef = ref(null)
+
+const form = reactive({
+  id: null,
+  status: '2',
+  reason: '',
+})
+
+const rules = {
+  status: [
+    {
+      required: true,
+      message: '状态不能为空',
+      trigger: 'blur',
+    },
+  ],
+  reason: [
+    {
+      required: true,
+      message: '原因不能为空',
+      trigger: 'blur',
+    },
+  ],
+}
+// 评论审核对话框引用
+const editDialogRef = ref(null)
+
+// 展示评论审核对话框
+const showEditDetailDialog = (row) => {
+  editDialogRef.value.open()
+  // 设置表单对象的评论 ID
+  form.id = row.id
+}
+
+const onSubmit = () => {
+  formRef.value.validate((valid) => {
+    if (!valid) {
+      console.log('表单验证不通过')
+      return false
+    }
+
+    // 显示提交按钮
+    editDialogRef.value.showBtnLoading()
+    examineComment(form)
+      .then((res) => {
+        if (!res.success) {
+          // 获取服务端返回的错误消息
+          let message = res.message
+
+          // 提示错误消息
+          showMessage(message, 'error')
+          return
+        }
+        showMessage('审核完成')
+
+        // 表单重置
+        form.id = null
+        form.status = 2
+        form.reason = ''
+
+        // 隐藏对话框
+        editDialogRef.value.close()
+
+        // 重新请求分页接口,渲染数据
+        getTableData()
+      })
+      .finally(() => editDialogRef.value.closeBtnLoading())
+  })
+}
 </script>
