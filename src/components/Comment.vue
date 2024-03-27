@@ -335,6 +335,10 @@ const route = useRoute()
 const commentStore = useCommentStore()
 
 watch(route, (newRoute, oldRoute) => {
+  // 设置评论表单中的路由路径
+  commentForm.routerUrl = route.query.articleId
+    ? route.path + '?articleId=' + route.query.articleId
+    : route.path
   initComments()
 })
 
@@ -344,7 +348,9 @@ const commentForm = reactive({
   content: '',
   mail: '',
   nickname: '',
-  routerUrl: route.path,
+  routerUrl: route.query.articleId
+    ? route.path + '?articleId=' + route.query.articleId
+    : route.path,
   website: '',
   replyCommentId: null,
   parentCommentId: null,
