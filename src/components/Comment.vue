@@ -304,7 +304,14 @@ bg-sky-600 rounded-lg focus:ring-4 focus:ring-sky-200 dark:focus:ring-sky-900 ho
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, nextTick, initCustomFormatter } from 'vue'
+import {
+  ref,
+  onMounted,
+  reactive,
+  nextTick,
+  watch,
+  initCustomFormatter,
+} from 'vue'
 import { initTooltips, initPopovers } from 'flowbite'
 import { useCommentStore } from '@/stores/comment'
 import { useRoute } from 'vue-router'
@@ -327,6 +334,10 @@ const route = useRoute()
 
 const commentStore = useCommentStore()
 
+watch(route, (newRoute, oldRoute) => {
+  initComments()
+})
+
 // 评论表单
 const commentForm = reactive({
   avatar: '',
@@ -341,13 +352,18 @@ const commentForm = reactive({
 
 // 获取评论列表
 function initComments() {
+  // 通过路由 query 中的 artilceId 是否为空，来判断是文章详情页，还是 wiki 详情页，从而设置不同的路由地址
+  let path = route.query.articleId
+    ? route.path + '?articleId=' + route.query.articleId
+    : route.path
+
   // 获取当前路由下的所有评论
   getComments(route.path).then((res) => {
     if (res.success) {
       total.value = res.data.total
       comments.value = res.data.comments
 
-      console.log(commentStore.value)
+      console.log('获取当前' + route.path + '下的所有评论' + commentStore.value)
     }
   })
 }
